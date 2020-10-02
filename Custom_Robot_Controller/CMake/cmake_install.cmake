@@ -1,4 +1,4 @@
-# Install script for directory: /home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/CMake
+# Install script for directory: /home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/CMake
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/CMake/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/CMake/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

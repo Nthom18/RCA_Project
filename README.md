@@ -1,10 +1,6 @@
 # RCA_ProjectDette er en guide til hvordan man sætter op miljøet op, 
 og begynder at programmere.
 
----------------Setup Biblioteker-----------------
-
-
-
 ---------------Setup miljø------------------------
 1. Åben denne mappe, mappe Gazebo
 2. Højre click og tryk åben terminal
@@ -45,3 +41,4 @@ Skriv " make " dette compiler koden.
 3. Skriv " git add . " (tilføjer fill til at kunne blive commited)
 4. Skriv " git commit -m "text" " (Sender fil til at blive commited)
 5. Skriv " git push " (Pusher alt hvad man har commited, man skal også udfylde kode)
+
