@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/CMake
+CMAKE_SOURCE_DIR = ../RCA_Project/Custom_Robot_Controller/CMake
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/CMake
+CMAKE_BINARY_DIR = ../RCA_Project/Custom_Robot_Controller/CMake
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -69,8 +69,8 @@ rebuild_cache/fast: rebuild_cache
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/cmake-gui -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/CMake/CMakeFiles /home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/CMake/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /../RCA_Project/Custom_Robot_Controller/CMake/CMakeFiles /../RCA_Project/Custom_Robot_Controller/CMake/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/CMake/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /../RCA_Project/Custom_Robot_Controller/CMake/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -123,32 +123,32 @@ robot_control/fast:
 	$(MAKE) -f CMakeFiles/robot_control.dir/build.make CMakeFiles/robot_control.dir/build
 .PHONY : robot_control/fast
 
-home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.o: home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.o
+../RCA_Project/Custom_Robot_Controller/main.o: ../RCA_Project/Custom_Robot_Controller/main.cpp.o
 
-.PHONY : home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.o
+.PHONY : ../RCA_Project/Custom_Robot_Controller/main.o
 
 # target to build an object file
-home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.o:
-	$(MAKE) -f CMakeFiles/robot_control.dir/build.make CMakeFiles/robot_control.dir/home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.o
-.PHONY : home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.o
+../RCA_Project/Custom_Robot_Controller/main.cpp.o:
+	$(MAKE) -f CMakeFiles/robot_control.dir/build.make CMakeFiles/robot_control.dir/../RCA_Project/Custom_Robot_Controller/main.cpp.o
+.PHONY : ../RCA_Project/Custom_Robot_Controller/main.cpp.o
 
-home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.i: home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.i
+../RCA_Project/Custom_Robot_Controller/main.i: ../RCA_Project/Custom_Robot_Controller/main.cpp.i
 
-.PHONY : home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.i
+.PHONY : ../RCA_Project/Custom_Robot_Controller/main.i
 
 # target to preprocess a source file
-home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.i:
-	$(MAKE) -f CMakeFiles/robot_control.dir/build.make CMakeFiles/robot_control.dir/home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.i
-.PHONY : home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.i
+../RCA_Project/Custom_Robot_Controller/main.cpp.i:
+	$(MAKE) -f CMakeFiles/robot_control.dir/build.make CMakeFiles/robot_control.dir/../RCA_Project/Custom_Robot_Controller/main.cpp.i
+.PHONY : ../RCA_Project/Custom_Robot_Controller/main.cpp.i
 
-home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.s: home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.s
+../RCA_Project/Custom_Robot_Controller/main.s: ../RCA_Project/Custom_Robot_Controller/main.cpp.s
 
-.PHONY : home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.s
+.PHONY : ../RCA_Project/Custom_Robot_Controller/main.s
 
 # target to generate assembly for a file
-home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.s:
-	$(MAKE) -f CMakeFiles/robot_control.dir/build.make CMakeFiles/robot_control.dir/home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.s
-.PHONY : home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.s
+../RCA_Project/Custom_Robot_Controller/main.cpp.s:
+	$(MAKE) -f CMakeFiles/robot_control.dir/build.make CMakeFiles/robot_control.dir/../RCA_Project/Custom_Robot_Controller/main.cpp.s
+.PHONY : ../RCA_Project/Custom_Robot_Controller/main.cpp.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... robot_control"
-	@echo "... home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.o"
-	@echo "... home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.i"
-	@echo "... home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.s"
+	@echo "... ../RCA_Project/Custom_Robot_Controller/main.o"
+	@echo "... ../RCA_Project/Custom_Robot_Controller/main.i"
+	@echo "... ../RCA_Project/Custom_Robot_Controller/main.s"
 .PHONY : help
 
 
