@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/CMake
+CMAKE_SOURCE_DIR = /home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/CMake
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/CMake
+CMAKE_BINARY_DIR = /home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/CMake
 
 # Include any dependencies generated for this target.
 include CMakeFiles/robot_control.dir/depend.make
@@ -57,27 +57,27 @@ include CMakeFiles/robot_control.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/robot_control.dir/flags.make
 
-CMakeFiles/robot_control.dir/home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.o: CMakeFiles/robot_control.dir/flags.make
-CMakeFiles/robot_control.dir/home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.o: /home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/CMake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/robot_control.dir/home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/robot_control.dir/home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.o -c /home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp
+CMakeFiles/robot_control.dir/home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/main.cpp.o: CMakeFiles/robot_control.dir/flags.make
+CMakeFiles/robot_control.dir/home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/main.cpp.o: /home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/CMake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/robot_control.dir/home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/robot_control.dir/home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/main.cpp.o -c /home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/main.cpp
 
-CMakeFiles/robot_control.dir/home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/robot_control.dir/home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp > CMakeFiles/robot_control.dir/home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.i
+CMakeFiles/robot_control.dir/home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/robot_control.dir/home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/main.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/main.cpp > CMakeFiles/robot_control.dir/home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/main.cpp.i
 
-CMakeFiles/robot_control.dir/home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/robot_control.dir/home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp -o CMakeFiles/robot_control.dir/home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.s
+CMakeFiles/robot_control.dir/home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/robot_control.dir/home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/main.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/main.cpp -o CMakeFiles/robot_control.dir/home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/main.cpp.s
 
 # Object files for target robot_control
 robot_control_OBJECTS = \
-"CMakeFiles/robot_control.dir/home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.o"
+"CMakeFiles/robot_control.dir/home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/main.cpp.o"
 
 # External object files for target robot_control
 robot_control_EXTERNAL_OBJECTS =
 
-robot_control: CMakeFiles/robot_control.dir/home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/main.cpp.o
+robot_control: CMakeFiles/robot_control.dir/home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/main.cpp.o
 robot_control: CMakeFiles/robot_control.dir/build.make
 robot_control: /usr/local/lib/libopencv_gapi.so.4.5.0
 robot_control: /usr/local/lib/libopencv_stitching.so.4.5.0
@@ -201,7 +201,7 @@ robot_control: /usr/lib/x86_64-linux-gnu/libignition-common3.so.3.6.1
 robot_control: /usr/lib/x86_64-linux-gnu/libuuid.so
 robot_control: /usr/lib/x86_64-linux-gnu/libuuid.so
 robot_control: CMakeFiles/robot_control.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/CMake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable robot_control"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/CMake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable robot_control"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/robot_control.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -214,6 +214,6 @@ CMakeFiles/robot_control.dir/clean:
 .PHONY : CMakeFiles/robot_control.dir/clean
 
 CMakeFiles/robot_control.dir/depend:
-	cd /home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/CMake && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/CMake /home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/CMake /home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/CMake /home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/CMake /home/mikkel/GitHub/RCA_Project/Custom_Robot_Controller/CMake/CMakeFiles/robot_control.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/CMake && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/CMake /home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/CMake /home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/CMake /home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/CMake /home/nico929/Desktop/RCA_Project/Custom_Robot_Controller/CMake/CMakeFiles/robot_control.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/robot_control.dir/depend
 
