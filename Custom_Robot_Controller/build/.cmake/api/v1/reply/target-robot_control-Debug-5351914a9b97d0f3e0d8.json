@@ -306,6 +306,10 @@
 				"role" : "libraries"
 			},
 			{
+				"fragment" : "-lfuzzylite",
+				"role" : "libraries"
+			},
+			{
 				"backtrace" : 2,
 				"fragment" : "/usr/local/lib/libopencv_gapi.so.4.5.0",
 				"role" : "libraries"
@@ -622,6 +626,90 @@
 				"role" : "libraries"
 			},
 			{
+				"fragment" : "-lBulletSoftBody",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lBulletDynamics",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lBulletCollision",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lLinearMath",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lgazebo",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lgazebo_client",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lgazebo_gui",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lgazebo_sensors",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lgazebo_rendering",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lgazebo_physics",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lgazebo_ode",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lgazebo_transport",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lgazebo_util",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lgazebo_common",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lgazebo_gimpact",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lgazebo_opcode",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lgazebo_opende_ou",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lprotobuf",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lOgreMain",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lOgreTerrain",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lOgrePaging",
+				"role" : "libraries"
+			},
+			{
 				"backtrace" : 2,
 				"fragment" : "/usr/local/lib/libopencv_shape.so.4.5.0",
 				"role" : "libraries"
@@ -719,90 +807,6 @@
 			{
 				"backtrace" : 2,
 				"fragment" : "/usr/local/lib/libopencv_core.so.4.5.0",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lBulletSoftBody",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lBulletDynamics",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lBulletCollision",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lLinearMath",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lgazebo",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lgazebo_client",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lgazebo_gui",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lgazebo_sensors",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lgazebo_rendering",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lgazebo_physics",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lgazebo_ode",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lgazebo_transport",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lgazebo_util",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lgazebo_common",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lgazebo_gimpact",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lgazebo_opcode",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lgazebo_opende_ou",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lprotobuf",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lOgreMain",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lOgreTerrain",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-lOgrePaging",
 				"role" : "libraries"
 			},
 			{

@@ -12,4 +12,4 @@ find_package(gazebo REQUIRED)
 include_directories(${GAZEBO_PROTO_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
 
 add_executable(robot_control ../main.cpp)
-target_link_libraries(robot_control ${OpenCV_LIBS} ${GAZEBO_PROTO_LIBRARIES} ${GAZEBO_LIBRARIES})
+target_link_libraries(robot_control fuzzylite ${OpenCV_LIBS} ${GAZEBO_PROTO_LIBRARIES} ${GAZEBO_LIBRARIES})
