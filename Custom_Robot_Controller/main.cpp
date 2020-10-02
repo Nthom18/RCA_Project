@@ -134,6 +134,11 @@ int main(int _argc, char **_argv) {
   const int key_down = 84;
   const int key_right = 83;
   const int key_esc = 27;
+  const int key_w = 119;
+  const int key_a = 97;
+  const int key_s = 115;
+  const int key_d = 100;
+  const int key_space = 32;
 
   float speed = 0.0;
   float dir = 0.0;
@@ -149,18 +154,23 @@ int main(int _argc, char **_argv) {
     if (key == key_esc)
       break;
 
-    if ((key == key_up) && (speed <= 1.2f))
+    if (((key == key_up)||(key == key_w)) && (speed <= 1.2f))
       speed += 0.05;
-    else if ((key == key_down) && (speed >= -1.2f))
+    else if (((key == key_down)||(key == key_s)) && (speed >= -1.2f))
       speed -= 0.05;
-    else if ((key == key_right) && (dir <= 0.4f))
+    else if (((key == key_right)||(key == key_d)) && (dir <= 0.4f))
       dir += 0.05;
-    else if ((key == key_left) && (dir >= -0.4f))
+    else if (((key == key_left)||(key == key_a)) && (dir >= -0.4f))
       dir -= 0.05;
+    else if (key == key_space)
+    {
+      dir = 0;
+      speed = 0;
+    }
     else {
       // slow down
-      //      speed *= 0.1;
-      //      dir *= 0.1;
+      //speed *= 0.001;
+      //dir *= 0.001;
     }
 
     // Generate a pose
