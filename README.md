@@ -1,6 +1,10 @@
 # RCA_ProjectDette er en guide til hvordan man sætter op miljøet op, 
 og begynder at programmere.
 
+---------------Setup Biblioteker-----------------
+
+
+
 ---------------Setup miljø------------------------
 1. Åben denne mappe, mappe Gazebo
 2. Højre click og tryk åben terminal
@@ -26,9 +30,18 @@ i top venstre hjørne), og task " bash gazebo_client.sh "
     CMake mappen.
 )
 4. Her kan coden til at styrer roboten skrives
-5. For at compile koden skal man bruge terminalen indbygget i vc-code.
+5. Vær opmærksom på, at koden kører for første gang på din maskine, så slet
+CMake filer undtagen CMakeLists.txt.
+6. For at compile koden skal man bruge terminalen indbygget i vc-code.
 Skriv først " cd CMake " , dette behøver man kun at gøre en gang.
 Skriv " cmake . ", dette behøver man kun at gøre hver gang man ændre CMake (Så en gang)
+Skriv " make " dette compiler koden.
 
-5. For at compile eller test kode, gå ind i build mappen via vscode terminalen "cd build",
-og skriv " ./robot_control ".
+7. For at kører det compilede program, skriv " ./robot_control "
+
+--------------Push til GitHub-------------------------
+1. Åben mappe RCA_Project
+2. Højre klik og åben terminal
+3. Skriv " git add . " (tilføjer fill til at kunne blive commited)
+4. Skriv " git commit -m "text" " (Sender fil til at blive commited)
+5. Skriv " git push " (Pusher alt hvad man har commited, man skal også udfylde kode)
