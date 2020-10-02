@@ -42,3 +42,6 @@ Skriv " make " dette compiler koden.
 4. Skriv " git commit -m "text" " (Sender fil til at blive commited)
 5. Skriv " git push " (Pusher alt hvad man har commited, man skal også udfylde kode)
 
+--------------Pull fra Github---------------------------
+I terminal "git pull "
+Hvis konflikter lav " git add" og "git commig -m "something" " og prøv "git pull igen"
