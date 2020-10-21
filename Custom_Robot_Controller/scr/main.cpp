@@ -76,8 +76,8 @@ int main(int _argc, char **_argv) {
   obstacle->setEnabled(true);
   obstacle->setRange(0.000 , 1.000);
   obstacle->setLockValueInRange(false);
-  obstacle->addTerm(new fl::Ramp("left", 0.000, 1.000));
-  obstacle->addTerm(new fl::Ramp("right", 1.000, 0.000));
+  obstacle->addTerm(new fl::Ramp("left", 0.000, 0.500));
+  obstacle->addTerm(new fl::Ramp("right", 0.500, 1.000));
   engine->addInputVariable(obstacle);
   
   //Setup output variable
@@ -91,8 +91,8 @@ int main(int _argc, char **_argv) {
   mSteer->setDefuzzifier(new fl::Centroid(100));
   mSteer->setDefaultValue(fl::nan);
   mSteer->setLockPreviousValue(false);
-  mSteer->addTerm(new fl::Ramp("left", 0.000, 1.000));
-  mSteer->addTerm(new fl::Ramp("right", 0.000, 1.000));
+  mSteer->addTerm(new fl::Ramp("left", 0.000, 5.000));
+  mSteer->addTerm(new fl::Ramp("right", 0.500, 1.000));
   engine->addOutputVariable(mSteer);
 
   // Setup ruleblock
