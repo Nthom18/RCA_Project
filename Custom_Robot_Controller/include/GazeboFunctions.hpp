@@ -6,6 +6,8 @@
 
 #include <opencv2/opencv.hpp>
 
+#include "GlobalVars.hpp"
+
 #include <iostream>
 #include <vector>
 #include <math.h>
@@ -51,13 +53,16 @@ void cameraCallback(ConstImageStampedPtr &msg) {
   std::size_t height = msg->image().height();
   const char *data = msg->image().data().c_str();
   cv::Mat im(int(height), int(width), CV_8UC3, const_cast<char *>(data));
-
+  
   im = im.clone();
   cv::cvtColor(im, im, cv::COLOR_RGB2BGR);
 
   mutex.lock();
   cv::imshow("camera", im);
   mutex.unlock();
+
+  // Clone camera-feed into global variable
+  cam = im.clone();
 }
 
 void lidarCallback(ConstLaserScanStampedPtr &msg) {

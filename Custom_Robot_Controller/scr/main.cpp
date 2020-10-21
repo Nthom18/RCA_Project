@@ -1,3 +1,8 @@
+#include <gazebo/gazebo_client.hh>
+#include <gazebo/msgs/msgs.hh>
+#include <gazebo/transport/transport.hh>
+
+#include <opencv2/opencv.hpp>
 #include "fl/Headers.h"
 
 #include <iostream>
@@ -5,6 +10,7 @@
 #include <math.h>
 
 #include "../include/functions.hpp"
+#include "../include/GlobalVars.hpp"
 #include "../include/GazeboFunctions.hpp"
 
 int main(int _argc, char **_argv) {
@@ -153,6 +159,19 @@ int main(int _argc, char **_argv) {
     gazebo::msgs::Pose msg;
     gazebo::msgs::Set(&msg, pose);
     movementPublisher->Publish(msg);
+
+    // // Get map
+    // std::string mapPath = "../../Gazebo/models/bigworld/meshes/floor_plan.png";
+    // cv::Mat map = cv::imread(mapPath);
+    // if (!map.data) {
+    //     return 1;
+    // }
+    
+    // Get camera feed
+    mutex.lock();
+    cv::imshow("camera2", cam);
+    mutex.unlock();
+
   }
 
   // Make sure to shut everything down.
