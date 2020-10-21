@@ -13,7 +13,10 @@
 #include "../include/GlobalVars.hpp"
 #include "../include/GazeboFunctions.hpp"
 
+
+/*   main   */
 int main(int _argc, char **_argv) {
+  
   // Load gazebo
   gazebo::client::setup(_argc, _argv);
 
@@ -60,51 +63,49 @@ int main(int _argc, char **_argv) {
   float speed = 0.0;
   float dir = 0.0;
 
-  //Setup fuzzy control
-  using namespace fl;
-
-    //Setup Engine  
+  /********** FUZZY CONTROL **********/
+  //Setup Engine  
   fl::Engine* engine = new fl::Engine;
   engine->setName("obstacleAvoidance");
   engine->setDescription("");
 
-    //Setup input variable
+  //Setup input variable
   fl::InputVariable* obstacle = new fl::InputVariable;
   obstacle->setName("obstacle");
   obstacle->setDescription("");
   obstacle->setEnabled(true);
   obstacle->setRange(0.000 , 1.000);
   obstacle->setLockValueInRange(false);
-  obstacle->addTerm(new Ramp("left", 0.000, 1.000));
-  obstacle->addTerm(new Ramp("right", 1.000, 0.000));
+  obstacle->addTerm(new fl::Ramp("left", 0.000, 1.000));
+  obstacle->addTerm(new fl::Ramp("right", 1.000, 0.000));
   engine->addInputVariable(obstacle);
   
-    //Setup output variable
+  //Setup output variable
   fl::OutputVariable* mSteer = new fl::OutputVariable;
   mSteer->setName("mSteer");
   mSteer->setDescription("");
   mSteer->setEnabled(true);
   mSteer->setRange(0.000, 1.000);
   mSteer->setLockValueInRange(false);
-  mSteer->setAggregation(new Maximum);
-  mSteer->setDefuzzifier(new Centroid(100));
+  mSteer->setAggregation(new fl::Maximum);
+  mSteer->setDefuzzifier(new fl::Centroid(100));
   mSteer->setDefaultValue(fl::nan);
   mSteer->setLockPreviousValue(false);
-  mSteer->addTerm(new Ramp("left", 0.000, 1.000));
-  mSteer->addTerm(new Ramp("right", 0.000, 1.000));
+  mSteer->addTerm(new fl::Ramp("left", 0.000, 1.000));
+  mSteer->addTerm(new fl::Ramp("right", 0.000, 1.000));
   engine->addOutputVariable(mSteer);
 
-    // Setup ruleblock
-  RuleBlock* mamdani = new RuleBlock;
+  // Setup ruleblock
+  fl::RuleBlock* mamdani = new fl::RuleBlock;
   mamdani->setName("mamdani");
   mamdani->setDescription("");
   mamdani->setEnabled(true);
   mamdani->setConjunction(fl::null);
   mamdani->setDisjunction(fl::null);
-  mamdani->setImplication(new AlgebraicProduct);
-  mamdani->setActivation(new General);
-  mamdani->addRule(Rule::parse("if obstacle is left then mSteer is right", engine));
-  mamdani->addRule(Rule::parse("if obstacle is right then mSteer is left", engine));
+  mamdani->setImplication(new fl::AlgebraicProduct);
+  mamdani->setActivation(new fl::General);
+  mamdani->addRule(fl::Rule::parse("if obstacle is left then mSteer is right", engine));
+  mamdani->addRule(fl::Rule::parse("if obstacle is right then mSteer is left", engine));
   engine->addRuleBlock(mamdani);
 
   // Loop
@@ -117,14 +118,14 @@ int main(int _argc, char **_argv) {
 
     // Fuzzyfication - Test fuzzylite using center distance
       // Convert the distance from robot to an obstacle to a value between 0-1.
-    scalar location = obstacle->getMinimum() + center_distance * (obstacle->range() / lidarMaxRange);
+    fl::scalar location = obstacle->getMinimum() + center_distance * (obstacle->range() / lidarMaxRange);
       // Give value to input variable
     obstacle->setValue(location);
       // Process fuzzylite
     engine->process();
       //Output fuzzylite
-    scalar fuzzyOutput = mSteer->getValue();
-    std::cout << Op::str(fuzzyOutput) << std::endl;
+    fl::scalar fuzzyOutput = mSteer->getValue();
+    std::cout << fl::Op::str(fuzzyOutput) << std::endl;
     
     
 
@@ -145,7 +146,7 @@ int main(int _argc, char **_argv) {
       speed = 0;
     }
     else {
-      // slow down
+      // slow down - This is a heavy calculation and slows down the whole program!
       //speed *= 0.001;
       //dir *= 0.001;
     }
