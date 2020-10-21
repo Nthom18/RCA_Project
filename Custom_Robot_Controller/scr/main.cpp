@@ -160,13 +160,16 @@ int main(int _argc, char **_argv) {
     gazebo::msgs::Set(&msg, pose);
     movementPublisher->Publish(msg);
 
-    // // Get map
-    // std::string mapPath = "../../Gazebo/models/bigworld/meshes/floor_plan.png";
-    // cv::Mat map = cv::imread(mapPath);
-    // if (!map.data) {
-    //     return 1;
-    // }
-    
+    // Get map
+    std::string mapPath = "../../Gazebo/models/bigworld/meshes/floor_plan.png";
+    cv::Mat map = cv::imread(mapPath);
+    if (!map.data) {
+        return 1;
+    }
+    mutex.lock();
+    cv::imshow("Map", map);
+    mutex.unlock();
+
     // Get camera feed
     mutex.lock();
     cv::imshow("camera2", cam);
