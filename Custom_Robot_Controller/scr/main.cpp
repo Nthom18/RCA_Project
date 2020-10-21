@@ -56,8 +56,8 @@ int main(int _argc, char **_argv) {
 
   //Setup fuzzy control
   using namespace fl;
-    //Setup Engine
-    
+
+    //Setup Engine  
   fl::Engine* engine = new fl::Engine;
   engine->setName("obstacleAvoidance");
   engine->setDescription("");
@@ -69,7 +69,7 @@ int main(int _argc, char **_argv) {
   obstacle->setEnabled(true);
   obstacle->setRange(0.000 , 1.000);
   obstacle->setLockValueInRange(false);
-  obstacle->addTerm(new Ramp("left", 1.000, 0.000));
+  obstacle->addTerm(new Ramp("left", 0.000, 1.000));
   obstacle->addTerm(new Ramp("right", 1.000, 0.000));
   engine->addInputVariable(obstacle);
   
@@ -88,6 +88,7 @@ int main(int _argc, char **_argv) {
   mSteer->addTerm(new Ramp("right", 0.000, 1.000));
   engine->addOutputVariable(mSteer);
 
+    // Setup ruleblock
   RuleBlock* mamdani = new RuleBlock;
   mamdani->setName("mamdani");
   mamdani->setDescription("");
@@ -108,12 +109,15 @@ int main(int _argc, char **_argv) {
     int key = cv::waitKey(1);
     mutex.unlock();
 
-    // Fuzzyfication
+    // Fuzzyfication - Test fuzzylite using center distance
+      // Convert the distance from robot to an obstacle to a value between 0-1.
     scalar location = obstacle->getMinimum() + center_distance * (obstacle->range() / lidarMaxRange);
+      // Give value to input variable
     obstacle->setValue(location);
+      // Process fuzzylite
     engine->process();
+      //Output fuzzylite
     scalar fuzzyOutput = mSteer->getValue();
-    //std::cout << fuzzyOutput[0] << std::endl;
     std::cout << Op::str(fuzzyOutput) << std::endl;
     
     
