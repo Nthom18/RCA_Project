@@ -163,18 +163,18 @@ int main(int _argc, char **_argv) {
 
 
     /*  Get map from var map declared in GlobalVars.hpp */
-    // Show map:
-    if (!map.data) {
-        return 1;
-    }
-    mutex.lock();
-    cv::imshow("Map", map);
-    mutex.unlock();
+    // // Show map:
+    // if (!map.data) {
+    //     return 1;
+    // }
+    // mutex.lock();
+    // cv::imshow("Map", map);
+    // mutex.unlock();
 
     /*  Get camera stream from var cam declared in GlobalVars.hpp 
         and updated in GazeboFunctions.hpp */
 
-    // Proof camera is accessable from var cam:    
+    // // Proof camera is accessable from var cam:    
     // mutex.lock();
     // cv::imshow("camera2", cam);
     // mutex.unlock();
