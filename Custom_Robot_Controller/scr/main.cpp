@@ -13,10 +13,13 @@
 #include "../include/GlobalVars.hpp"
 #include "../include/GazeboFunctions.hpp"
 
+// Prototypes
+void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacle, fl::OutputVariable* mSteer);
 
 /*   main   */
 int main(int _argc, char **_argv) {
   
+  /********** GAZEBO SETUP SETUP **********/
   // Load gazebo
   gazebo::client::setup(_argc, _argv);
 
@@ -49,6 +52,36 @@ int main(int _argc, char **_argv) {
   worldPublisher->WaitForConnection();
   worldPublisher->Publish(controlMessage);
 
+
+
+  /********** FUZZY CONTROL SETUP **********/
+  fl::Engine* engine = new fl::Engine;
+  fl::InputVariable* obstacle = new fl::InputVariable;
+  fl::OutputVariable* mSteer = new fl::OutputVariable;
+  fuzzyController(engine, obstacle, mSteer);
+
+  // Loop
+  while (true) {
+    gazebo::common::Time::MSleep(10);
+
+    mutex.lock();
+    int key = cv::waitKey(1);
+    mutex.unlock();
+
+  /********** FUZZY CONTROL **********/
+    // Fuzzyfication - Test fuzzylite using center distance
+      // Convert the distance from robot to an obstacle to a value between 0-1.
+    fl::scalar location = obstacle->getMinimum() + center_distance * (obstacle->range() / lidarMaxRange);
+      // Give value to input variable
+    obstacle->setValue(location);
+      // Process fuzzylite
+    engine->process();
+      //Output fuzzylite
+    fl::scalar fuzzyOutput = mSteer->getValue();
+    std::cout << fl::Op::str(fuzzyOutput) << std::endl;
+    
+    
+  /********** KEYBOARD CONTROL **********/
   const int key_left = 81;
   const int key_up = 82;
   const int key_down = 84;
@@ -62,72 +95,6 @@ int main(int _argc, char **_argv) {
 
   float speed = 0.0;
   float dir = 0.0;
-
-  /********** FUZZY CONTROL **********/
-  //Setup Engine  
-  fl::Engine* engine = new fl::Engine;
-  engine->setName("obstacleAvoidance");
-  engine->setDescription("");
-
-  //Setup input variable
-  fl::InputVariable* obstacle = new fl::InputVariable;
-  obstacle->setName("obstacle");
-  obstacle->setDescription("");
-  obstacle->setEnabled(true);
-  obstacle->setRange(0.000 , 1.000);
-  obstacle->setLockValueInRange(false);
-  obstacle->addTerm(new fl::Ramp("left", 0.000, 0.500));
-  obstacle->addTerm(new fl::Ramp("right", 0.500, 1.000));
-  engine->addInputVariable(obstacle);
-  
-  //Setup output variable
-  fl::OutputVariable* mSteer = new fl::OutputVariable;
-  mSteer->setName("mSteer");
-  mSteer->setDescription("");
-  mSteer->setEnabled(true);
-  mSteer->setRange(0.000, 1.000);
-  mSteer->setLockValueInRange(false);
-  mSteer->setAggregation(new fl::Maximum);
-  mSteer->setDefuzzifier(new fl::Centroid(100));
-  mSteer->setDefaultValue(fl::nan);
-  mSteer->setLockPreviousValue(false);
-  mSteer->addTerm(new fl::Ramp("left", 0.000, 5.000));
-  mSteer->addTerm(new fl::Ramp("right", 0.500, 1.000));
-  engine->addOutputVariable(mSteer);
-
-  // Setup ruleblock
-  fl::RuleBlock* mamdani = new fl::RuleBlock;
-  mamdani->setName("mamdani");
-  mamdani->setDescription("");
-  mamdani->setEnabled(true);
-  mamdani->setConjunction(fl::null);
-  mamdani->setDisjunction(fl::null);
-  mamdani->setImplication(new fl::AlgebraicProduct);
-  mamdani->setActivation(new fl::General);
-  mamdani->addRule(fl::Rule::parse("if obstacle is left then mSteer is right", engine));
-  mamdani->addRule(fl::Rule::parse("if obstacle is right then mSteer is left", engine));
-  engine->addRuleBlock(mamdani);
-
-  // Loop
-  while (true) {
-    gazebo::common::Time::MSleep(10);
-
-    mutex.lock();
-    int key = cv::waitKey(1);
-    mutex.unlock();
-
-    // Fuzzyfication - Test fuzzylite using center distance
-      // Convert the distance from robot to an obstacle to a value between 0-1.
-    fl::scalar location = obstacle->getMinimum() + center_distance * (obstacle->range() / lidarMaxRange);
-      // Give value to input variable
-    obstacle->setValue(location);
-      // Process fuzzylite
-    engine->process();
-      //Output fuzzylite
-    fl::scalar fuzzyOutput = mSteer->getValue();
-    std::cout << fl::Op::str(fuzzyOutput) << std::endl;
-    
-    
 
     if (key == key_esc)
       break;
@@ -162,6 +129,7 @@ int main(int _argc, char **_argv) {
     movementPublisher->Publish(msg);
 
 
+  /********** CAMERA AND MAP TEST **********/
     /*  Get map from var map declared in GlobalVars.hpp */
     // // Show map:
     // if (!map.data) {
@@ -183,4 +151,48 @@ int main(int _argc, char **_argv) {
 
   // Make sure to shut everything down.
   gazebo::client::shutdown();
+}
+
+void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacle, fl::OutputVariable* mSteer)
+{
+  //Setup Engine  
+  engine->setName("obstacleAvoidance");
+  engine->setDescription("");
+
+  //Setup input variable
+  obstacle->setName("obstacle");
+  obstacle->setDescription("");
+  obstacle->setEnabled(true);
+  obstacle->setRange(0.000 , 1.000);
+  obstacle->setLockValueInRange(false);
+  obstacle->addTerm(new fl::Ramp("left", 0.000, 0.500));
+  obstacle->addTerm(new fl::Ramp("right", 0.500, 1.000));
+  engine->addInputVariable(obstacle);
+  
+  //Setup output variable
+  mSteer->setName("mSteer");
+  mSteer->setDescription("");
+  mSteer->setEnabled(true);
+  mSteer->setRange(0.000, 1.000);
+  mSteer->setLockValueInRange(false);
+  mSteer->setAggregation(new fl::Maximum);
+  mSteer->setDefuzzifier(new fl::Centroid(100));
+  mSteer->setDefaultValue(fl::nan);
+  mSteer->setLockPreviousValue(false);
+  mSteer->addTerm(new fl::Ramp("left", 0.000, 5.000));
+  mSteer->addTerm(new fl::Ramp("right", 0.500, 1.000));
+  engine->addOutputVariable(mSteer);
+
+  // Setup ruleblock
+  fl::RuleBlock* mamdani = new fl::RuleBlock;
+  mamdani->setName("mamdani");
+  mamdani->setDescription("");
+  mamdani->setEnabled(true);
+  mamdani->setConjunction(fl::null);
+  mamdani->setDisjunction(fl::null);
+  mamdani->setImplication(new fl::AlgebraicProduct);
+  mamdani->setActivation(new fl::General);
+  mamdani->addRule(fl::Rule::parse("if obstacle is left then mSteer is right", engine));
+  mamdani->addRule(fl::Rule::parse("if obstacle is right then mSteer is left", engine));
+  engine->addRuleBlock(mamdani);
 }
