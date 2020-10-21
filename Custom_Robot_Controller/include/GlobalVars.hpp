@@ -6,4 +6,9 @@
 #include <vector>
 #include <math.h>
 
+// Declare Camera
 cv::Mat cam;
+
+// Load map
+std::string mapPath = "../../Gazebo/models/bigworld/meshes/floor_plan.png";
+cv::Mat map = cv::imread(mapPath);

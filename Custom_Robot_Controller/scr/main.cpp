@@ -161,19 +161,19 @@ int main(int _argc, char **_argv) {
     gazebo::msgs::Set(&msg, pose);
     movementPublisher->Publish(msg);
 
-    // Get map
-    std::string mapPath = "../../Gazebo/models/bigworld/meshes/floor_plan.png";
-    cv::Mat map = cv::imread(mapPath);
+
+    /*  Get map from var map declared in GlobalVars.hpp */
+    // Show map:
     if (!map.data) {
         return 1;
     }
-    // Show map:
-    // mutex.lock();
-    // cv::imshow("Map", map);
-    // mutex.unlock();
+    mutex.lock();
+    cv::imshow("Map", map);
+    mutex.unlock();
 
     /*  Get camera stream from var cam declared in GlobalVars.hpp 
         and updated in GazeboFunctions.hpp */
+
     // Proof camera is accessable from var cam:    
     // mutex.lock();
     // cv::imshow("camera2", cam);
