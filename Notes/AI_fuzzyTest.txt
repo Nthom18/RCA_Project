@@ -1,5 +1,5 @@
 
-Changes ramp interval to fit fuzzyset range:
+Changed ramp interval to fit fuzzyset range:
 	obstacle->addTerm(new fl::Ramp("left", 0.000, 1.000));
 	obstacle->addTerm(new fl::Ramp("right", 1.000, 0.000));
 To this:
@@ -7,7 +7,7 @@ To this:
 	obstacle->addTerm(new fl::Ramp("right", 0.500, 1.000));
 
 
-Changes ramp interval to fit fuzzyset range:
+Changed ramp interval to fit fuzzyset range:
 	mSteer->addTerm(new fl::Ramp("left", 0.000, 1.000));
 	mSteer->addTerm(new fl::Ramp("right", 0.000, 1.000));
 To this:
