@@ -11,5 +11,7 @@ include_directories(${OpenCV_INCLUDE_DIRS}) # Not needed for CMake >= 2.8.11
 find_package(gazebo REQUIRED)
 include_directories(${GAZEBO_PROTO_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
 
-add_executable(robot_control ../main.cpp)
+include_directories(../include)
+
+add_executable(robot_control ../scr/main.cpp)
 target_link_libraries(robot_control fuzzylite ${OpenCV_LIBS} ${GAZEBO_PROTO_LIBRARIES} ${GAZEBO_LIBRARIES})

@@ -1,12 +1,23 @@
+#pragma once
+
 #include <gazebo/gazebo_client.hh>
 #include <gazebo/msgs/msgs.hh>
 #include <gazebo/transport/transport.hh>
-#include "fl/Headers.h"
+
 #include <opencv2/opencv.hpp>
 
 #include <iostream>
+#include <vector>
+#include <math.h>
 
 static boost::mutex mutex;
+
+int distance;
+int center_distance;
+int left_distance;
+int right_distance;
+int lidarMaxRange;
+std::vector<int> lidars;
 
 void statCallback(ConstWorldStatisticsPtr &_msg) {
   (void)_msg;
@@ -22,14 +33,14 @@ void poseCallback(ConstPosesStampedPtr &_msg) {
   for (int i = 0; i < _msg->pose_size(); i++) {
     if (_msg->pose(i).name() == "pioneer2dx") {
 
-      std::cout << std::setprecision(2) << std::fixed << std::setw(6)
+      /*std::cout << std::setprecision(2) << std::fixed << std::setw(6)
                 << _msg->pose(i).position().x() << std::setw(6)
                 << _msg->pose(i).position().y() << std::setw(6)
                 << _msg->pose(i).position().z() << std::setw(6)
                 << _msg->pose(i).orientation().w() << std::setw(6)
                 << _msg->pose(i).orientation().x() << std::setw(6)
                 << _msg->pose(i).orientation().y() << std::setw(6)
-                << _msg->pose(i).orientation().z() << std::endl;
+                << _msg->pose(i).orientation().z() << std::endl;*/
     }
   }
 }
@@ -58,6 +69,7 @@ void lidarCallback(ConstLaserScanStampedPtr &msg) {
 
   float range_min = float(msg->scan().range_min());
   float range_max = float(msg->scan().range_max());
+  lidarMaxRange = range_max;
 
   int sec = msg->time().sec();
   int nsec = msg->time().nsec();
@@ -83,7 +95,6 @@ void lidarCallback(ConstLaserScanStampedPtr &msg) {
                       200.5f - range * px_per_m * std::sin(angle));
     cv::line(im, startpt * 16, endpt * 16, cv::Scalar(255, 255, 255, 255), 1,
              cv::LINE_AA, 4);
-
     //    std::cout << angle << " " << range << " " << intensity << std::endl;
   }
   cv::circle(im, cv::Point(200, 200), 2, cv::Scalar(0, 0, 255));
@@ -91,97 +102,23 @@ void lidarCallback(ConstLaserScanStampedPtr &msg) {
               cv::Point(10, 20), cv::FONT_HERSHEY_PLAIN, 1.0,
               cv::Scalar(255, 0, 0));
 
+
+  left_distance = std::min(float(msg->scan().ranges(nranges * 1/4)), range_max);
+  center_distance = std::min(float(msg->scan().ranges(nranges * 1/2)), range_max);
+  right_distance = std::min(float(msg->scan().ranges(nranges * 3/4)), range_max);
+  std::cout << std::endl << "Left " << left_distance << " , Center " << 
+  center_distance << " , Right " << right_distance << std::endl;
+  //Save range output
+  /*
+  cv::Point2f frontStart(200.5f + range_min * px_per_m * std::cos(90),
+                        200.5f - range_min * px_per_m * std::sin(90));
+    cv::Point2f endpt(200.5f + range * px_per_m * std::cos(90),
+                      200.5f - range * px_per_m * std::sin(90));
+                      */
+  //distance = std::sqrt(std::pow(frontStart.x,2) + frontStart.y) - ;
+
+
   mutex.lock();
   cv::imshow("lidar", im);
   mutex.unlock();
-}
-
-int main(int _argc, char **_argv) {
-  // Load gazebo
-  gazebo::client::setup(_argc, _argv);
-
-  // Create our node for communication
-  gazebo::transport::NodePtr node(new gazebo::transport::Node());
-  node->Init();
-
-  // Listen to Gazebo topics
-  gazebo::transport::SubscriberPtr statSubscriber =
-      node->Subscribe("~/world_stats", statCallback);
-
-  gazebo::transport::SubscriberPtr poseSubscriber =
-      node->Subscribe("~/pose/info", poseCallback);
-
-  gazebo::transport::SubscriberPtr cameraSubscriber =
-      node->Subscribe("~/pioneer2dx/camera/link/camera/image", cameraCallback);
-
-  gazebo::transport::SubscriberPtr lidarSubscriber =
-      node->Subscribe("~/pioneer2dx/hokuyo/link/laser/scan", lidarCallback);
-
-  // Publish to the robot vel_cmd topic
-  gazebo::transport::PublisherPtr movementPublisher =
-      node->Advertise<gazebo::msgs::Pose>("~/pioneer2dx/vel_cmd");
-
-  // Publish a reset of the world
-  gazebo::transport::PublisherPtr worldPublisher =
-      node->Advertise<gazebo::msgs::WorldControl>("~/world_control");
-  gazebo::msgs::WorldControl controlMessage;
-  controlMessage.mutable_reset()->set_all(true);
-  worldPublisher->WaitForConnection();
-  worldPublisher->Publish(controlMessage);
-
-  const int key_left = 81;
-  const int key_up = 82;
-  const int key_down = 84;
-  const int key_right = 83;
-  const int key_esc = 27;
-  const int key_w = 119;
-  const int key_a = 97;
-  const int key_s = 115;
-  const int key_d = 100;
-  const int key_space = 32;
-
-  float speed = 0.0;
-  float dir = 0.0;
-
-  // Loop
-  while (true) {
-    gazebo::common::Time::MSleep(10);
-
-    mutex.lock();
-    int key = cv::waitKey(1);
-    mutex.unlock();
-
-    if (key == key_esc)
-      break;
-
-    if (((key == key_up)||(key == key_w)) && (speed <= 1.2f))
-      speed += 0.05;
-    else if (((key == key_down)||(key == key_s)) && (speed >= -1.2f))
-      speed -= 0.05;
-    else if (((key == key_right)||(key == key_d)) && (dir <= 0.4f))
-      dir += 0.05;
-    else if (((key == key_left)||(key == key_a)) && (dir >= -0.4f))
-      dir -= 0.05;
-    else if (key == key_space)
-    {
-      dir = 0;
-      speed = 0;
-    }
-    else {
-      // slow down
-      //speed *= 0.001;
-      //dir *= 0.001;
-    }
-
-    // Generate a pose
-    ignition::math::Pose3d pose(double(speed), 0, 0, 0, 0, double(dir));
-
-    // Convert to a pose message
-    gazebo::msgs::Pose msg;
-    gazebo::msgs::Set(&msg, pose);
-    movementPublisher->Publish(msg);
-  }
-
-  // Make sure to shut everything down.
-  gazebo::client::shutdown();
 }
