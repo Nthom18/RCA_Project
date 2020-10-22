@@ -12,6 +12,7 @@
 #include "../include/functions.hpp"
 #include "../include/GlobalVars.hpp"
 #include "../include/GazeboFunctions.hpp"
+#include "keyboardControl.cpp"
 
 // Prototypes
 void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacle, fl::OutputVariable* mSteer);
@@ -63,10 +64,9 @@ int main(int _argc, char **_argv) {
   // Loop
   while (true) {
     gazebo::common::Time::MSleep(10);
-
-    mutex.lock();
-    int key = cv::waitKey(1);
-    mutex.unlock();
+    
+    float dir = 0.0;
+    float speed = 0.0;
 
   /********** FUZZY CONTROL **********/
     // Fuzzyfication - Test fuzzylite using center distance
@@ -80,43 +80,12 @@ int main(int _argc, char **_argv) {
     fl::scalar fuzzyOutput = mSteer->getValue();
     std::cout << fl::Op::str(fuzzyOutput) << std::endl;
     
-    
-  /********** KEYBOARD CONTROL **********/
-  const int key_left = 81;
-  const int key_up = 82;
-  const int key_down = 84;
-  const int key_right = 83;
-  const int key_esc = 27;
-  const int key_w = 119;
-  const int key_a = 97;
-  const int key_s = 115;
-  const int key_d = 100;
-  const int key_space = 32;
+      
+  
+ 
+    keyboardControl(&dir, &speed);
 
-  float speed = 0.0;
-  float dir = 0.0;
 
-    if (key == key_esc)
-      break;
-
-    if (((key == key_up)||(key == key_w)) && (speed <= 1.2f))
-      speed += 0.05;
-    else if (((key == key_down)||(key == key_s)) && (speed >= -1.2f))
-      speed -= 0.05;
-    else if (((key == key_right)||(key == key_d)) && (dir <= 0.4f))
-      dir += 0.05;
-    else if (((key == key_left)||(key == key_a)) && (dir >= -0.4f))
-      dir -= 0.05;
-    else if (key == key_space)
-    {
-      dir = 0;
-      speed = 0;
-    }
-    else {
-      // slow down - This is a heavy calculation and slows down the whole program!
-      //speed *= 0.001;
-      //dir *= 0.001;
-    }
 
     // Generate a pose
     ignition::math::Pose3d pose(double(speed), 0, 0, 0, 0, double(dir));
@@ -196,3 +165,7 @@ void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacle, fl::Output
   mamdani->addRule(fl::Rule::parse("if obstacle is right then mSteer is left", engine));
   engine->addRuleBlock(mamdani);
 }
+
+
+
+
