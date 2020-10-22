@@ -65,8 +65,8 @@ int main(int _argc, char **_argv) {
   while (true) {
     gazebo::common::Time::MSleep(10);
     
-    float dir = 0.0;
-    float speed = 0.0;
+    static float dir = 0.0;
+    static float speed = 0.0;
 
   /********** FUZZY CONTROL **********/
     // Fuzzyfication - Test fuzzylite using center distance
