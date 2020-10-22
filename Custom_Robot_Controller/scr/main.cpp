@@ -15,8 +15,6 @@
 #include "keyboardControl.cpp"
 #include "fuzzyController.cpp"
 
-// Prototypes
-// void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacle, fl::OutputVariable* mSteer);
 
 /*   main   */
 int main(int _argc, char **_argv) {
@@ -53,7 +51,6 @@ int main(int _argc, char **_argv) {
   controlMessage.mutable_reset()->set_all(true);
   worldPublisher->WaitForConnection();
   worldPublisher->Publish(controlMessage);
-
 
 
   /********** FUZZY CONTROL SETUP **********/
@@ -97,6 +94,7 @@ int main(int _argc, char **_argv) {
 
 
   /********** CAMERA AND MAP TEST **********/
+  
     /*  Get map from var map declared in GlobalVars.hpp */
     // // Show map:
     // if (!map.data) {
@@ -115,7 +113,6 @@ int main(int _argc, char **_argv) {
     // mutex.unlock();
 
   }
-
   // Make sure to shut everything down.
   gazebo::client::shutdown();
 }

@@ -1,0 +1,10 @@
+
+How to change color/texture of marbles
+
+Go to folder:
+RCA_Project/Gazebo/models/marble/materials/textures
+
+Import an image to this folder
+
+Change the name of the image to 'marble_texture.jpg'
+(Don't delete other images, rename them first)
