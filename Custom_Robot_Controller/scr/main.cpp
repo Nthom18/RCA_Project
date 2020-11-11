@@ -14,10 +14,13 @@
 #include "../include/GazeboFunctions.hpp"
 #include "keyboardControl.cpp"
 #include "fuzzyController.cpp"
+#include "cv.hpp"
 
 
 /*   main   */
 int main(int _argc, char **_argv) {
+
+  cv::Mat edges;
   
   /********** GAZEBO SETUP SETUP **********/
   // Load gazebo
@@ -112,6 +115,30 @@ int main(int _argc, char **_argv) {
     // cv::imshow("camera2", cam);
     // mutex.unlock();
 
+    
+ 
+    // edges = hough(cam);
+
+    std::vector<cv::Vec3f> circles = hough(cam);
+
+     for( size_t i = 0; i < circles.size(); i++ )
+    {
+        cv::Vec3i c = circles[i];
+        cv::Point center = cv::Point(c[0], c[1]);
+        // circle center
+        circle( cam, center, 1, cv::Scalar(0,100,100), 3, cv::LINE_AA);
+        // circle outline
+        int radius = c[2];
+        circle( cam, center, radius, cv::Scalar(255,0,255), 3, cv::LINE_AA);
+    }
+
+
+    if( !(cam.size().width == 0 && cam.size().height == 0) )
+    {
+      mutex.lock();
+      cv::imshow("Edges", cam);
+      mutex.unlock();
+    }
   }
   // Make sure to shut everything down.
   gazebo::client::shutdown();
