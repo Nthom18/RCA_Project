@@ -21,11 +21,6 @@
 /*   main   */
 int main(int _argc, char **_argv) {
 
-  /*  Get map from var mapO declared in GlobalVars.hpp */
-  while(!mapO.data)
-    std::cout << "Map not ready" << std::endl;
-  cv::Mat map = mapO.clone();
-
   
   /********** GAZEBO SETUP SETUP **********/
   // Load gazebo
@@ -86,7 +81,7 @@ int main(int _argc, char **_argv) {
     engine->process();
       //Output fuzzylite
     fl::scalar fuzzyOutput = mSteer->getValue();
-    std::cout << fl::Op::str(fuzzyOutput) << std::endl;
+    // std::cout << fl::Op::str(fuzzyOutput) << std::endl;
     
 
 
@@ -101,18 +96,8 @@ int main(int _argc, char **_argv) {
     movementPublisher->Publish(msg);
 
 
-    /********** CAMERA AND MAP TEST **********/
-  
-    // Show map:
 
-    // mutex.lock();
-    // cv::imshow("Map", map);
-    // mutex.unlock();
-
-
-
-
-
+    /********** HOUGH TRANSFORM **********/
 
     std::vector<cv::Vec3f> circles = hough(cam);
 

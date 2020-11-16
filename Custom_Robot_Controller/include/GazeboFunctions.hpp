@@ -117,8 +117,8 @@ void lidarCallback(ConstLaserScanStampedPtr &msg) {
   left_distance = std::min(float(msg->scan().ranges(nranges * 1/4)), range_max);
   center_distance = std::min(float(msg->scan().ranges(nranges * 1/2)), range_max);
   right_distance = std::min(float(msg->scan().ranges(nranges * 3/4)), range_max);
-  std::cout << std::endl << "Left " << left_distance << " , Center " << 
-  center_distance << " , Right " << right_distance << std::endl;
+  // std::cout << std::endl << "Left " << left_distance << " , Center " << 
+  // center_distance << " , Right " << right_distance << std::endl;
   //Save range output
   /*
   cv::Point2f frontStart(200.5f + range_min * px_per_m * std::cos(90),
