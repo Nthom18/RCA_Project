@@ -13,5 +13,6 @@ include_directories(${GAZEBO_PROTO_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
 
 include_directories(../include)
 
-add_executable(robot_control ../scr/main.cpp ../scr/cv.hpp ../scr/cv.cpp)
+add_executable(robot_control ../scr/main.cpp ../scr/cv.hpp ../scr/cv.cpp
+                 ../scr/trackPos.hpp ../scr/trackPos.cpp)
 target_link_libraries(robot_control fuzzylite ${OpenCV_LIBS} ${GAZEBO_PROTO_LIBRARIES} ${GAZEBO_LIBRARIES})
