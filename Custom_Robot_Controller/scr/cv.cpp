@@ -1,20 +1,26 @@
 #include "cv.hpp"
+#include <cassert>
 #include <iostream>
 
 cv::Mat edges;
+std::vector<cv::Vec3f> circles;
 
 std::vector<cv::Vec3f> hough(cv::Mat img)
 {
     // cv::Canny(img, edges, 180, 200);
 
+    circles.clear();
+    if( img.empty() )
+        return circles;
+
 
     cv::Mat gray;
     cvtColor(img, gray, cv::COLOR_BGR2GRAY);
     // medianBlur(gray, gray, 5);
-    std::vector<cv::Vec3f> circles;
+    
     HoughCircles(gray, circles, cv::HOUGH_GRADIENT, 1,
                  gray.rows/4,  // change this value to detect circles with different distances to each other
-                 200, 20, 1, 0 // change the last two parameters
+                 350, 20, gray.rows/32, gray.rows // change the last two parameters
                  // (min_radius & max_radius) to detect larger circles
     );
     // for( size_t i = 0; i < circles.size(); i++ )
