@@ -7,6 +7,7 @@
 #include <opencv2/opencv.hpp>
 
 #include "GlobalVars.hpp"
+#include "../scr/trackPos.hpp"
 
 #include <iostream>
 #include <vector>
@@ -43,8 +44,13 @@ void poseCallback(ConstPosesStampedPtr &_msg) {
                 << _msg->pose(i).orientation().x() << std::setw(6)
                 << _msg->pose(i).orientation().y() << std::setw(6)
                 << _msg->pose(i).orientation().z() << std::endl;*/
+      track(mapO, _msg->pose(i).position().x(), _msg->pose(i).position().y());
+
     }
   }
+  mutex.lock();
+  cv::imshow("Path", mapO);
+  mutex.unlock();
 }
 
 void cameraCallback(ConstImageStampedPtr &msg) {

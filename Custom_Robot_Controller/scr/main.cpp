@@ -21,7 +21,11 @@
 /*   main   */
 int main(int _argc, char **_argv) {
 
-  cv::Mat edges;
+  /*  Get map from var mapO declared in GlobalVars.hpp */
+  while(!mapO.data)
+    std::cout << "Map not ready" << std::endl;
+  cv::Mat map = mapO.clone();
+
   
   /********** GAZEBO SETUP SETUP **********/
   // Load gazebo
@@ -97,24 +101,16 @@ int main(int _argc, char **_argv) {
     movementPublisher->Publish(msg);
 
 
-  /********** CAMERA AND MAP TEST **********/
+    /********** CAMERA AND MAP TEST **********/
   
-    /*  Get map from var map declared in GlobalVars.hpp */
-    // // Show map:
-    // if (!map.data) {
-    //     return 1;
-    // }
+    // Show map:
+
     // mutex.lock();
     // cv::imshow("Map", map);
     // mutex.unlock();
 
-    /*  Get camera stream from var cam declared in GlobalVars.hpp 
-        and updated in GazeboFunctions.hpp */
 
-    // // Proof camera is accessable from var cam:    
-    // mutex.lock();
-    // cv::imshow("camera2", cam);
-    // mutex.unlock();
+
 
 
 
@@ -125,10 +121,10 @@ int main(int _argc, char **_argv) {
         cv::Vec3i c = circles[i];
         cv::Point center = cv::Point(c[0], c[1]);
         // circle center
-        circle( cam, center, 1, cv::Scalar(0,100,100), 3, cv::LINE_AA);
+        circle( cam, center, 1, cv::Scalar(255,0,255), 3, cv::LINE_AA);
         // circle outline
         int radius = c[2];
-        circle( cam, center, radius, cv::Scalar(255,0,255), 3, cv::LINE_AA);
+        circle( cam, center, radius, cv::Scalar(255,0,255), 1, cv::LINE_AA);
     }
 
     if( !(cam.size().width == 0 && cam.size().height == 0) )

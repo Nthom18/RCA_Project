@@ -1,5 +1,4 @@
 #include "cv.hpp"
-#include <cassert>
 #include <iostream>
 
 cv::Mat edges;
