@@ -1,5 +1,5 @@
 #include <opencv2/opencv.hpp>
 
-void track(cv::Mat map, int x, int y);
+void track(cv::Mat map, float x, float y);
 
-int intervalMapping(int s, cv::Point from, cv::Point to);
+float intervalMapping(float s, cv::Point from, cv::Point to);
