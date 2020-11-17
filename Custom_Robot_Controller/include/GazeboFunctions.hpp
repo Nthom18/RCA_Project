@@ -7,7 +7,7 @@
 #include <opencv2/opencv.hpp>
 
 #include "GlobalVars.hpp"
-#include "../scr/trackPos.hpp"
+#include "../scr/cv.hpp"
 
 #include <iostream>
 #include <vector>
