@@ -1,5 +1,9 @@
 {
     "files.associations": {
+<<<<<<< HEAD
+=======
+        "iostream": "cpp",
+>>>>>>> 2705ce39be312c651bb5ab2d542fd7242fc690b2
         "cctype": "cpp",
         "clocale": "cpp",
         "cmath": "cpp",
@@ -54,7 +58,10 @@
         "initializer_list": "cpp",
         "iomanip": "cpp",
         "iosfwd": "cpp",
+<<<<<<< HEAD
         "iostream": "cpp",
+=======
+>>>>>>> 2705ce39be312c651bb5ab2d542fd7242fc690b2
         "istream": "cpp",
         "limits": "cpp",
         "mutex": "cpp",
@@ -69,5 +76,10 @@
         "typeindex": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp"
+<<<<<<< HEAD
     }
+=======
+    },
+    "cmake.configureOnOpen": true
+>>>>>>> 2705ce39be312c651bb5ab2d542fd7242fc690b2
 }

@@ -1,0 +1,9 @@
+CV_getEnv branch:
+
+Added GlobalVars.hpp to include folder and declared cv::Mat cam.
+In GazeboFunctions.hpp the camera feed is copied to cam.
+cam is accessable from main, and can be read and written to. 
+
+Loaded floor_plan.png into main.
+
+
