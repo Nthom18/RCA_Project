@@ -13,11 +13,16 @@
 static boost::mutex mutex;
 
 int distance;
-int center_distance;
-int left_distance;
-int right_distance;
+float center_distance;
+float left_distance;
+float right_distance;
 int lidarMaxRange;
+int lidarMinRange; //added
 std::vector<int> lidars;
+
+//temp
+int right_closest, left_closest, center_closest;
+//end temtp
 
 void statCallback(ConstWorldStatisticsPtr &_msg) {
   (void)_msg;
@@ -70,6 +75,7 @@ void lidarCallback(ConstLaserScanStampedPtr &msg) {
   float range_min = float(msg->scan().range_min());
   float range_max = float(msg->scan().range_max());
   lidarMaxRange = range_max;
+  lidarMinRange = range_min; //added 
 
   int sec = msg->time().sec();
   int nsec = msg->time().nsec();
@@ -103,11 +109,65 @@ void lidarCallback(ConstLaserScanStampedPtr &msg) {
               cv::Scalar(255, 0, 0));
 
 
-  left_distance = std::min(float(msg->scan().ranges(nranges * 1/4)), range_max);
-  center_distance = std::min(float(msg->scan().ranges(nranges * 1/2)), range_max);
-  right_distance = std::min(float(msg->scan().ranges(nranges * 3/4)), range_max);
-  std::cout << std::endl << "Left " << left_distance << " , Center " << 
-  center_distance << " , Right " << right_distance << std::endl;
+// //original
+//   left_distance = std::min(float(msg->scan().ranges(nranges * 1/4)), range_max);
+//   center_distance = std::min(float(msg->scan().ranges(nranges * 1/2)), range_max);
+//   right_distance = std::min(float(msg->scan().ranges(nranges * 3/4)), range_max);
+//   std::cout << std::endl << "Left " << left_distance << " , Center " << 
+//   center_distance << " , Right " << right_distance << std::endl;
+// //End original
+
+//Altered 
+  //determine closest point to the left, center and right
+  left_distance = 10;
+  right_distance = 10;
+  center_distance = 10;
+  for (int i = 0; i < nranges*1/3; i++)
+  {
+    if (std::min(float(msg->scan().ranges(i)), range_max) < left_distance)
+    {
+      left_distance = std::min(float(msg->scan().ranges(i)), range_max);
+      //std::cout << "Left_distance right after assignment: " << left_distance << std::endl;
+    }
+
+
+    if (std::min(float(msg->scan().ranges(i*2)), range_max) < center_distance)
+    {
+      center_distance = std::min(float(msg->scan().ranges(i*2)), range_max);
+      
+    }
+
+    if (std::min(float(msg->scan().ranges(i*3)), range_max) < right_distance)
+    {
+      right_distance = std::min(float(msg->scan().ranges(i*3)), range_max);
+      
+    }
+                  //test
+      //std::cout << std::min(float(msg->scan().ranges(i*3)), range_max) << std::endl; 
+      //end test
+    //std::cout << left_distance << std::endl;
+    // std::cout << "Nranges: "<< nranges << std::endl;
+    // std::cout << "1/3 Nranges: " << (nranges * 1/3) << std::endl;
+    // std::cout <<  "min:(scan, nrange(1/4)): " << std::min(float(msg->scan().ranges(nranges * 1/4)), range_max);
+    // std::cout << std::endl;
+    // std::cout <<  "min:(scan, nrange(i)): " << std::min(float(msg->scan().ranges(i)), range_max);
+    // std::cout << std::endl;
+  }
+  //std::cout << left_distance << std::endl;
+
+  // left_distance = std::min(float(msg->scan().ranges(nranges * 1/4)), range_max);
+  //center_distance = std::min(float(msg->scan().ranges(nranges * 1/2)), range_max);
+  //right_distance = std::min(float(msg->scan().ranges(nranges * 3/4)), range_max);
+  // std::cout << std::endl << "Left " << left_distance << " , Center " << 
+  // center_distance << " , Right " << right_distance << std::endl;
+//end altered
+
+
+    // //test
+    // std::cout << "after values assigned to distances" <<std::endl;
+
+    //end test
+
   //Save range output
   /*
   cv::Point2f frontStart(200.5f + range_min * px_per_m * std::cos(90),
