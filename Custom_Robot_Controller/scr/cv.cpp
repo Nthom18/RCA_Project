@@ -4,12 +4,10 @@
 #define COLOR_COUNT 25
 #define BORDER_WIDTH 25
 
-cv::Mat edges;
-std::vector<cv::Vec3f> circles;
 
 std::vector<cv::Vec3f> hough(cv::Mat img)
 {
-    // cv::Canny(img, edges, 180, 200);
+    std::vector<cv::Vec3f> circles;
 
     circles.clear();
     if( img.empty() )
@@ -18,7 +16,8 @@ std::vector<cv::Vec3f> hough(cv::Mat img)
 
     cv::Mat gray;
     cvtColor(img, gray, cv::COLOR_BGR2GRAY);
-    // medianBlur(gray, gray, 5);
+    
+    medianBlur(gray, gray, 5);
     
     HoughCircles(gray, circles, cv::HOUGH_GRADIENT, 1,
                  gray.rows/4,  // change this value to detect circles with different distances to each other

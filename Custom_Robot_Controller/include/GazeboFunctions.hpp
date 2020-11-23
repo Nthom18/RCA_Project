@@ -63,9 +63,9 @@ void cameraCallback(ConstImageStampedPtr &msg) {
   im = im.clone();
   cv::cvtColor(im, im, cv::COLOR_RGB2BGR);
 
-  mutex.lock();
-  cv::imshow("camera", im);
-  mutex.unlock();
+  // mutex.lock();
+  // cv::imshow("camera", im);
+  // mutex.unlock();
 
   // Clone camera-feed into global variable
   cam = im.clone();

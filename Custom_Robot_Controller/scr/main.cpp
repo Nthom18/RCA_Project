@@ -115,7 +115,7 @@ int main(int _argc, char **_argv) {
     if( !(cam.size().width == 0 && cam.size().height == 0) )
     {
       mutex.lock();
-      cv::imshow("Edges", cam);
+      cv::imshow("Hough Detection", cam);
       mutex.unlock();
     }
   }
