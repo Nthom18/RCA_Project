@@ -15,7 +15,6 @@
 #include "keyboardControl.cpp"
 #include "fuzzyController.cpp"
 #include "cv.hpp"
-// #include "trackPos.hpp"
 
 
 /*   main   */
@@ -99,23 +98,14 @@ int main(int _argc, char **_argv) {
 
     /********** HOUGH TRANSFORM **********/
 
-    std::vector<cv::Vec3f> circles = hough(cam);
+    cv::Mat cam_cal = hough(cam);
 
-    for( size_t i = 0; i < circles.size(); i++ )
-    {
-        cv::Vec3i c = circles[i];
-        cv::Point center = cv::Point(c[0], c[1]);
-        // circle center
-        circle( cam, center, 1, cv::Scalar(255,0,255), 3, cv::LINE_AA);
-        // circle outline
-        int radius = c[2];
-        circle( cam, center, radius, cv::Scalar(255,0,255), 1, cv::LINE_AA);
-    }
 
-    if( !(cam.size().width == 0 && cam.size().height == 0) )
+
+    if( !(cam_cal.size().width == 0 && cam_cal.size().height == 0) )
     {
       mutex.lock();
-      cv::imshow("Hough Detection", cam);
+      cv::imshow("Hough Detection", cam_cal);
       mutex.unlock();
     }
   }

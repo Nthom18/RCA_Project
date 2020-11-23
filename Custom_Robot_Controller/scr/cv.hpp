@@ -1,6 +1,8 @@
 #include <opencv2/opencv.hpp>
 
-std::vector<cv::Vec3f> hough(cv::Mat img);
+cv::Mat calibrate(cv::Mat img);
+
+cv::Mat hough(cv::Mat img);
 
 void track(cv::Mat map, float x, float y);
 

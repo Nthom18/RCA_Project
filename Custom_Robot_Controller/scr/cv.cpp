@@ -4,18 +4,36 @@
 #define COLOR_COUNT 25
 #define BORDER_WIDTH 25
 
+cv::Mat calibrate(cv::Mat img)
+{
+    const float f = 24.1;
+    const float cx = 320/2, cy = 240/2;
+    const float k1 = -0.25, k2 = 0.12, k3 = 0.0;
+    const float p1 = -0.00028, p2 = -0.00005;
 
-std::vector<cv::Vec3f> hough(cv::Mat img)
+    cv::Mat cameraMatrix = (cv::Mat1d(3, 3) << f, 0, cx, 0, f, cy, 0, 0, 1);
+    cv::Mat distCoeffs = (cv::Mat1d(1, 5) << k1, k2, p1, p2, k3);
+
+    cv::Mat img_cal;
+    cv::undistort(img, img_cal, cameraMatrix, distCoeffs);
+
+    return img_cal;
+
+}
+
+cv::Mat hough(cv::Mat img)
 {
     std::vector<cv::Vec3f> circles;
 
     circles.clear();
     if( img.empty() )
-        return circles;
+        return img;
 
+
+    cv::Mat img_cal = calibrate(img);
 
     cv::Mat gray;
-    cvtColor(img, gray, cv::COLOR_BGR2GRAY);
+    cvtColor(img_cal, gray, cv::COLOR_BGR2GRAY);
     
     medianBlur(gray, gray, 5);
     
@@ -24,18 +42,19 @@ std::vector<cv::Vec3f> hough(cv::Mat img)
                  350, 20, gray.rows/32, gray.rows // change the last two parameters
                  // (min_radius & max_radius) to detect larger circles
     );
-    // for( size_t i = 0; i < circles.size(); i++ )
-    // {
-    //     cv::Vec3i c = circles[i];
-    //     cv::Point center = cv::Point(c[0], c[1]);
-    //     // circle center
-    //     circle( img, center, 1, cv::Scalar(0,100,100), 3, cv::LINE_AA);
-    //     // circle outline
-    //     int radius = c[2];
-    //     circle( img, center, radius, cv::Scalar(255,0,255), 3, cv::LINE_AA);
-    // }
+    
+    for( size_t i = 0; i < circles.size(); i++ )
+    {
+        cv::Vec3i c = circles[i];
+        cv::Point center = cv::Point(c[0], c[1]);
+        // circle center
+        cv::circle( img_cal, center, 1, cv::Scalar(255,0,255), 3, cv::LINE_AA);
+        // circle outline
+        int radius = c[2];
+        cv::circle( img_cal, center, radius, cv::Scalar(255,0,255), 1, cv::LINE_AA);
+    }
 
-    return circles;
+    return img_cal;
 }
 
 
