@@ -52,7 +52,7 @@ void track(cv::Mat map, float x, float y)
     static const cv::Point map_y(BORDER_WIDTH, map.rows - BORDER_WIDTH);
 
     // std::cout << x << " " << y << std::endl;
-
+    
     x = intervalMapping(x, gz_x, map_x);
     y = intervalMapping(y, gz_y, map_y);
 
