@@ -4,26 +4,28 @@
 #define COLOR_COUNT 25
 #define BORDER_WIDTH 25
 
+#define FOCAL_LENGTH 24.1
+
 cv::Mat calibrate(cv::Mat img)
 {
-    const float f = 24.1;
-    const float cx = 320/2, cy = 240/2;
-    const float k1 = -0.25, k2 = 0.12, k3 = 0.0;
-    const float p1 = -0.00028, p2 = -0.00005;
+    static const float f = FOCAL_LENGTH;
+    static const float cx = 320/2, cy = 240/2;
+    // static const float k1 = 0.25, k2 = -0.12, k3 = 0.0;
+    static const float k1 = 0.0, k2 = 0.0, k3 = 0.0;
+    static const float p1 = -0.00028, p2 = -0.00005;
 
-    cv::Mat cameraMatrix = (cv::Mat1d(3, 3) << f, 0, cx, 0, f, cy, 0, 0, 1);
-    cv::Mat distCoeffs = (cv::Mat1d(1, 5) << k1, k2, p1, p2, k3);
+    static const cv::Mat cameraMatrix = (cv::Mat1d(3, 3) << f, 0, cx, 0, f, cy, 0, 0, 1);
+    static const cv::Mat distCoeffs = (cv::Mat1d(1, 5) << k1, k2, p1, p2, k3);
 
-    cv::Mat img_cal;
+    static cv::Mat img_cal;
     cv::undistort(img, img_cal, cameraMatrix, distCoeffs);
 
     return img_cal;
-
 }
 
 cv::Mat hough(cv::Mat img)
 {
-    std::vector<cv::Vec3f> circles;
+    static std::vector<cv::Vec3f> circles;
 
     circles.clear();
     if( img.empty() )
@@ -32,7 +34,7 @@ cv::Mat hough(cv::Mat img)
 
     cv::Mat img_cal = calibrate(img);
 
-    cv::Mat gray;
+    static cv::Mat gray;
     cvtColor(img_cal, gray, cv::COLOR_BGR2GRAY);
     
     medianBlur(gray, gray, 5);
@@ -52,9 +54,19 @@ cv::Mat hough(cv::Mat img)
         // circle outline
         int radius = c[2];
         cv::circle( img_cal, center, radius, cv::Scalar(255,0,255), 1, cv::LINE_AA);
+        
+        float a = distanceToMarble(c[2]);
+        // std::cout << "Distance: " << a << std::endl;
     }
-
     return img_cal;
+}
+
+float distanceToMarble(int rdx)
+{
+    static const int r = 1;
+    float a = FOCAL_LENGTH/(rdx*r);
+    
+    return a;
 }
 
 
