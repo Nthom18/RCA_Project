@@ -7,6 +7,7 @@
 #include <opencv2/opencv.hpp>
 
 #include "GlobalVars.hpp"
+#include "../scr/cv.hpp"
 
 #include <iostream>
 #include <vector>
@@ -48,8 +49,13 @@ void poseCallback(ConstPosesStampedPtr &_msg) {
                 << _msg->pose(i).orientation().x() << std::setw(6)
                 << _msg->pose(i).orientation().y() << std::setw(6)
                 << _msg->pose(i).orientation().z() << std::endl;*/
+      track(mapO, _msg->pose(i).position().x(), _msg->pose(i).position().y());
+
     }
   }
+  mutex.lock();
+  cv::imshow("Path", mapO);
+  mutex.unlock();
 }
 
 void cameraCallback(ConstImageStampedPtr &msg) {
@@ -62,9 +68,9 @@ void cameraCallback(ConstImageStampedPtr &msg) {
   im = im.clone();
   cv::cvtColor(im, im, cv::COLOR_RGB2BGR);
 
-  mutex.lock();
-  cv::imshow("camera", im);
-  mutex.unlock();
+  // mutex.lock();
+  // cv::imshow("camera", im);
+  // mutex.unlock();
 
   // Clone camera-feed into global variable
   cam = im.clone();
@@ -112,6 +118,7 @@ void lidarCallback(ConstLaserScanStampedPtr &msg) {
   cv::putText(im, std::to_string(sec) + ":" + std::to_string(nsec),
               cv::Point(10, 20), cv::FONT_HERSHEY_PLAIN, 1.0,
               cv::Scalar(255, 0, 0));
+
 
 
 // //original
@@ -172,6 +179,13 @@ void lidarCallback(ConstLaserScanStampedPtr &msg) {
     // std::cout << "after values assigned to distances" <<std::endl;
 
     //end test
+
+
+  // left_distance = std::min(float(msg->scan().ranges(nranges * 1/4)), range_max);
+  // center_distance = std::min(float(msg->scan().ranges(nranges * 1/2)), range_max);
+  // right_distance = std::min(float(msg->scan().ranges(nranges * 3/4)), range_max);
+  // std::cout << std::endl << "Left " << left_distance << " , Center " << 
+  // center_distance << " , Right " << right_distance << std::endl;
 
   //Save range output
   /*

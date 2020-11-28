@@ -14,10 +14,12 @@
 #include "../include/GazeboFunctions.hpp"
 #include "keyboardControl.cpp"
 #include "fuzzyController.cpp"
+#include "cv.hpp"
 
 
 /*   main   */
 int main(int _argc, char **_argv) {
+
   
   /********** GAZEBO SETUP SETUP **********/
   // Load gazebo
@@ -54,36 +56,22 @@ int main(int _argc, char **_argv) {
 
 
   //Setup fuzzy control
-  //using namespace fl;
 
     //Setup Engine  
   fl::Engine* engine = new fl::Engine;
   engine->setName("obstacleAvoidance");
   engine->setDescription("");
-
-// //old version -one input variable
-    //Setup input variable
-  // fl::InputVariable* obstacle = new fl::InputVariable;
-  // obstacle->setName("obstacle");
-  // obstacle->setDescription("");
-  // obstacle->setEnabled(true);
-  // obstacle->setRange(0.000 , 1.000);
-  // obstacle->setLockValueInRange(false);
-  // obstacle->addTerm(new Ramp("left", 0.000, 1.000));
-  // obstacle->addTerm(new Ramp("right", 1.000, 0.000));
-  // engine->addInputVariable(obstacle);
-
-//altered version - tree input variables, left, right, center
-    //Setup input variable
+  
+  //Setup input variable
   fl::InputVariable* obstacleLeft = new fl::InputVariable;
   obstacleLeft->setName("obstacleLeft");
   obstacleLeft->setDescription("");
   obstacleLeft->setEnabled(true);
-  obstacleLeft->setRange(0.000 , 1.000); //0.000 , 1.000);
+  obstacleLeft->setRange(0.000 , 1.000); 
   obstacleLeft->setLockValueInRange(false);
   obstacleLeft->addTerm(new fl::Ramp("veryClose", 0.500, 0.000, 1.0));
   obstacleLeft->addTerm(new fl::Triangle("close", 0.250, 0.500, 0.750, 1.0));
-  obstacleLeft->addTerm(new fl::Triangle("visible", 0.500, 0.750, 1.000, 1.0));//0.000, 0.250, 0.500, 1.0));
+  obstacleLeft->addTerm(new fl::Triangle("visible", 0.500, 0.750, 1.000, 1.0));
   engine->addInputVariable(obstacleLeft);
 
   fl::InputVariable* obstacleCenter = new fl::InputVariable;
@@ -94,10 +82,10 @@ int main(int _argc, char **_argv) {
   obstacleCenter->setLockValueInRange(false);
   obstacleCenter->addTerm(new fl::Ramp("veryClose", 0.500, 0.000, 1.0));
   obstacleCenter->addTerm(new fl::Triangle("close", 0.250, 0.500, 0.750, 1.0));
-  obstacleCenter->addTerm(new fl::Triangle("visible", 0.500, 0.750, 1.000, 1.0));//0.000, 0.250, 0.500, 1.0));
+  obstacleCenter->addTerm(new fl::Triangle("visible", 0.500, 0.750, 1.000, 1.0));
   engine->addInputVariable(obstacleCenter);
 
-    fl::InputVariable* obstacleRight = new fl::InputVariable;
+  fl::InputVariable* obstacleRight = new fl::InputVariable;
   obstacleRight->setName("obstacleRight");
   obstacleRight->setDescription("");
   obstacleRight->setEnabled(true);
@@ -105,11 +93,11 @@ int main(int _argc, char **_argv) {
   obstacleRight->setLockValueInRange(false);
   obstacleRight->addTerm(new fl::Ramp("veryClose", 0.500, 0.000, 1.0));
   obstacleRight->addTerm(new fl::Triangle("close", 0.250, 0.500, 0.750, 1.0));
-  obstacleRight->addTerm(new fl::Triangle("visible", 0.500, 0.750, 1.000, 1.0));//0.000, 0.250, 0.500, 1.0));
+  obstacleRight->addTerm(new fl::Triangle("visible", 0.500, 0.750, 1.000, 1.0));
   engine->addInputVariable(obstacleRight);
   
  
-        //Setup output variable - speed
+  //Setup output variable - speed
   fl::OutputVariable* mSpeed= new fl::OutputVariable;
   mSpeed->setName("mSpeed");
   mSpeed->setDescription("");
@@ -126,7 +114,7 @@ int main(int _argc, char **_argv) {
 
   engine->addOutputVariable(mSpeed);
 
-   //Setup output variable - direction
+  //Setup output variable - direction
   fl::OutputVariable* mSteer = new fl::OutputVariable;
   mSteer->setName("mSteer");
   mSteer->setDescription("");
@@ -137,8 +125,6 @@ int main(int _argc, char **_argv) {
   mSteer->setDefuzzifier(new fl::Centroid(100));
   mSteer->setDefaultValue(0.5);
   mSteer->setLockPreviousValue(false);
-
-
   //left - maximum left = 0
   mSteer->addTerm(new fl::Ramp("hardLeft", 0.250, 0, 1.0));
   mSteer->addTerm(new fl::Triangle("left", 0.125, 0.250, 0.375, 1.0));
@@ -184,87 +170,42 @@ int main(int _argc, char **_argv) {
     keyboardControl(&dir, &speed);
 
     /********** FUZZY CONTROL **********/
-    // Fuzzyfication - Test fuzzylite using center distance
-      // Convert the distance from robot to an obstacle to a value between 0-1.
-
-
-    // for (int i = 0; i < lidarMaxRange; i++)
-    // {
-    //   scalar test = 0 + i * 1/lidarMaxRange;
-    //       //tets
-    // std::cout << "distLeft: " << distLeft << std::endl;
-    // //end test
-    // obstacleLeft -> setValue(test);//distLeft);
-    // }
-    // distLeft = (obstacleLeft->getMinimum() +  left_distance * (obstacleLeft->range() / lidarMaxRange));
-
-
-    //scalar location = obstacle->getMinimum() + center_distance * (obstacle->range() / lidarMaxRange);
     fl::scalar locationL = obstacleLeft->getMinimum() + left_distance * (obstacleLeft->range() / lidarMaxRange);
     obstacleLeft->setValue(locationL);
     fl::scalar locationR = obstacleRight->getMinimum() + right_distance * (obstacleRight->range() / lidarMaxRange);
     obstacleRight->setValue(locationR);
     fl::scalar locationC = obstacleCenter->getMinimum() + center_distance * (obstacleCenter->range() / lidarMaxRange);
     obstacleCenter->setValue(locationC);
-    //obstacleRight->setValue(locationL);
-    //test 
-    //std::cout << "Location: " << location << std::endl;
-    //end test 
 
+    //Test
     std::cout << "LocationL: " << locationL << std::endl;
     std::cout << "LocationC  " << locationC << std::endl;
     std::cout << "LocationR: " << locationR << std::endl;
-    //old version
-
-      // Give value to input variable
-    //obstacle->setValue(location);
-
-    //Altered version
-    //obstacleLeft->setValue(location);
-
-    //std::cout << "ObstacleLeft: " << obstacleLeft->getValue() << std::endl;
-    //new version
-        //Give value to input variable
-      //obstacle->setValue(right) = location;
-
-
-
+    //end test
 
     //OBS! Do not open gazebo_client.sh
 
-      // Process fuzzylite
+    // Process fuzzylite
     engine->process();
-      //Output fuzzylite
 
+    // Output fuzzylite
     fl::scalar fuzzyOutputDir = mSteer->getValue();
     fl::scalar fuzzyOutputSpeed = mSpeed->getValue();
-    // //outcommented to test
-    // std::cout << "ObstacleL.input = " << Op::str(locationL) <<"ObstacleR.input = " << Op::str(locationR) << "=>" << "steer.output = "<< Op::str(fuzzyOutputDir) << std::endl;
-    // std::cout << "OL.in = " << Op::str(locationL) <<" OC.input = " << Op::str(locationC) << " OR.input = " << Op::str(locationR) << "=>" << "speed.output = "<< Op::str(fuzzyOutputSpeed) << std::endl;
-
 
     if( ( (speed - ( (float) fuzzyOutputSpeed * 1.25) ) > 0.05) || ( ( ( (float) fuzzyOutputSpeed * 1.25)  - speed) > 0.05)) //If the difference is greater than 0.05
     {
-      speed = (float) (fuzzyOutputSpeed * 1.25); //1.25;}
-      std::cout << "hello from the other inside!" << std::endl;
+      speed = (float) (fuzzyOutputSpeed * 1.25);
     }  
 
-
-    if(((((float) fuzzyOutputDir * 0.8)-0.4) - dir)  > 0.05)//(((dir - ((float) fuzzyOutputDir * 0.8)-0.4) > 0.05) || (((((float) fuzzyOutputDir * 0.8)-0.4) - dir)  > 0.05))
+    if((abs(dir - ((float) fuzzyOutputDir * 0.8)-0.4) > 0.05) || (((abs((float) fuzzyOutputDir * 0.8)-0.4) - dir)  > 0.05))  //((abs(((float) fuzzyOutputDir * 0.8)-0.4) - dir)  > 0.05)
     {
-      dir = -0.3;//((float) fuzzyOutputDir * 0.8)-0.4;
-      std::cout << "hello from the inside!" << std::endl;
+      dir = ((float) fuzzyOutputDir * 0.8)-0.4;
     }
     
+    //test
     std::cout << "Dir - stuff: " << (dir - (((float) fuzzyOutputDir * 0.8)-0.4) > 0.01) << " or stuff- dir: " << (((((float) fuzzyOutputDir * 0.8)-0.4) - dir)) << std::endl;
     std::cout << "fuzzyOutDir: " << fuzzyOutputDir << "  dir calculated: "<< ((float) fuzzyOutputDir * 0.8)-0.4 << " ->  dir: " << dir << std::endl;
-
-
-//(((float) fuzzyOutputDir * 0.8)-0.4)
-
-
-  // if(dir != (float) fuzzyOutputDir * 0.4)
-  //   dir = (float) fuzzyOutputDir * 0.4;
+    //end test
 
   if (key == key_esc)
     break;
@@ -280,25 +221,18 @@ int main(int _argc, char **_argv) {
     movementPublisher->Publish(msg);
 
 
-  /********** CAMERA AND MAP TEST **********/
-  
-    /*  Get map from var map declared in GlobalVars.hpp */
-    // // Show map:
-    // if (!map.data) {
-    //     return 1;
-    // }
-    // mutex.lock();
-    // cv::imshow("Map", map);
-    // mutex.unlock();
+    /********** HOUGH TRANSFORM **********/
 
-    /*  Get camera stream from var cam declared in GlobalVars.hpp 
-        and updated in GazeboFunctions.hpp */
+    cv::Mat cam_cal = hough(cam);
 
-    // // Proof camera is accessable from var cam:    
-    // mutex.lock();
-    // cv::imshow("camera2", cam);
-    // mutex.unlock();
 
+
+    if( !(cam_cal.size().width == 0 && cam_cal.size().height == 0) )
+    {
+      mutex.lock();
+      cv::imshow("Hough Detection", cam_cal);
+      mutex.unlock();
+    }
   }
   // Make sure to shut everything down.
   gazebo::client::shutdown();
