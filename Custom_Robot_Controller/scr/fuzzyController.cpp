@@ -97,5 +97,4 @@ void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacleLeft,
   mamdani->addRule(fl::Rule::parse("if obstacleRight is close or obstacleLeft is close or obstacleCenter is close then mSpeed is slow", engine));
   mamdani->addRule(fl::Rule::parse("if obstacleRight is visible or obstacleLeft is visible or obstacleCenter is visible then mSpeed is maximum", engine));
   engine->addRuleBlock(mamdani);
-
 }

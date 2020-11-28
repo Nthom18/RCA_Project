@@ -4,7 +4,7 @@ cv::Mat calibrate(cv::Mat img);
 
 cv::Mat hough(cv::Mat img);
 
-float distanceToMarble(int rdx);
+float distanceToMarble(int rpx);
 
 void trackOnMap(cv::Mat map, float x, float y);
 

@@ -146,6 +146,7 @@ void lidarCallback(ConstLaserScanStampedPtr &msg) {
     if (std::min(float(msg->scan().ranges((nranges/3)+i)), range_max) < center_distance)
     {
       center_distance = std::min(float(msg->scan().ranges((nranges/3)+i)), range_max);
+      std::cout << "LIDAR: " << center_distance << std::endl;
     }
 
     if (std::min(float(msg->scan().ranges((nranges/3)*2+i)), range_max) < right_distance)

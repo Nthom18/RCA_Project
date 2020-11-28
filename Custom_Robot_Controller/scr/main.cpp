@@ -90,11 +90,11 @@ int main(int _argc, char **_argv) {
     fl::scalar locationC = obstacleCenter->getMinimum() + center_distance * (obstacleCenter->range() / lidarMaxRange);
     obstacleCenter->setValue(locationC);
 
-    //Test
-    std::cout << "LocationL: " << locationL << std::endl;
-    std::cout << "LocationC  " << locationC << std::endl;
-    std::cout << "LocationR: " << locationR << std::endl;
-    //end test
+    // //Test
+    // std::cout << "LocationL: " << locationL << std::endl;
+    // std::cout << "LocationC  " << locationC << std::endl;
+    // std::cout << "LocationR: " << locationR << std::endl;
+    // //end test
 
     //OBS! Do not open gazebo_client.sh
 
@@ -104,22 +104,22 @@ int main(int _argc, char **_argv) {
     // Output fuzzylite
     fl::scalar fuzzyOutputDir = mSteer->getValue();
     fl::scalar fuzzyOutputSpeed = mSpeed->getValue();
+/**********************************/
+    // if( ( (speed - ( (float) fuzzyOutputSpeed * 1.25) ) > 0.05) || ( ( ( (float) fuzzyOutputSpeed * 1.25)  - speed) > 0.05)) //If the difference is greater than 0.05
+    // {
+    //   speed = (float) (fuzzyOutputSpeed * 1.25);
+    // }  
 
-    if( ( (speed - ( (float) fuzzyOutputSpeed * 1.25) ) > 0.05) || ( ( ( (float) fuzzyOutputSpeed * 1.25)  - speed) > 0.05)) //If the difference is greater than 0.05
-    {
-      speed = (float) (fuzzyOutputSpeed * 1.25);
-    }  
-
-    if((abs(dir - ((float) fuzzyOutputDir * 0.8)-0.4) > 0.05) || (((abs((float) fuzzyOutputDir * 0.8)-0.4) - dir)  > 0.05))  //((abs(((float) fuzzyOutputDir * 0.8)-0.4) - dir)  > 0.05)
-    {
-      dir = ((float) fuzzyOutputDir * 0.8)-0.4;
-    }
+    // if((abs(dir - ((float) fuzzyOutputDir * 0.8)-0.4) > 0.05) || (((abs((float) fuzzyOutputDir * 0.8)-0.4) - dir)  > 0.05))  //((abs(((float) fuzzyOutputDir * 0.8)-0.4) - dir)  > 0.05)
+    // {
+    //   dir = ((float) fuzzyOutputDir * 0.8)-0.4;
+    // }
     
-    //test
-    std::cout << "Dir - stuff: " << (dir - (((float) fuzzyOutputDir * 0.8)-0.4) > 0.01) << " or stuff- dir: " << (((((float) fuzzyOutputDir * 0.8)-0.4) - dir)) << std::endl;
-    std::cout << "fuzzyOutDir: " << fuzzyOutputDir << "  dir calculated: "<< ((float) fuzzyOutputDir * 0.8)-0.4 << " ->  dir: " << dir << std::endl;
-    //end test
-
+    // //test
+    // std::cout << "Dir - stuff: " << (dir - (((float) fuzzyOutputDir * 0.8)-0.4) > 0.01) << " or stuff- dir: " << (((((float) fuzzyOutputDir * 0.8)-0.4) - dir)) << std::endl;
+    // std::cout << "fuzzyOutDir: " << fuzzyOutputDir << "  dir calculated: "<< ((float) fuzzyOutputDir * 0.8)-0.4 << " ->  dir: " << dir << std::endl;
+    // //end test
+/**********************************/
   if (key == key_esc)
     break;
 
