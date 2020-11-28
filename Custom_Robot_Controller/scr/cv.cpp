@@ -67,7 +67,7 @@ float distanceToMarble(int rpx)
     static const int r = 1;
     float a = FOCAL_LENGTH/(rpx*2 * r);
 
-    std::cout << "HOUGH: " << a << std::endl;
+    // std::cout << "HOUGH: " << a << std::endl;
     
     return a;
 }

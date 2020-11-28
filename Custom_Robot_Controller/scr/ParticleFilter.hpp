@@ -105,7 +105,7 @@ public:
 
             PrintWeights(); // Print weights (for debugging)
         }
-        else    // If partikles has already been created one
+        else    // If particles has already been created once
         {
             // Remove the lowest 50% accurate particles
             weights.erase(weights.begin() + (weights.size()/2), weights.end());
