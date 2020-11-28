@@ -189,7 +189,9 @@ int main(int _argc, char **_argv) {
     static float dir = 0.0;
     static float speed = 0.0;
 
-    keyboardControl(&dir, &speed);
+    /********** CONTROL WITH KEYBOARD **********/
+    // keyboardControl(&dir, &speed);
+
 
     /********** FUZZY CONTROL **********/
     // Fuzzyfication - Test fuzzylite using center distance
@@ -256,29 +258,6 @@ int main(int _argc, char **_argv) {
 
     // std::cout << fl::Op::str(fuzzyOutput) << std::endl;
 
-    
-  //Original version
-    // if (key == key_esc)
-    //   break;
-
-    // if (((key == key_up)||(key == key_w)) && (speed <= 1.2f))
-    //   speed += 0.05;
-    // else if (((key == key_down)||(key == key_s)) && (speed >= -1.2f))
-    //   speed -= 0.05;
-    // else if (((key == key_right)||(key == key_d)) && (dir <= 0.4f))
-    //   dir += 0.05;
-    // else if (((key == key_left)||(key == key_a)) && (dir >= -0.4f))
-    //   dir -= 0.05;
-    // else if (key == key_space)
-    // {
-    //   dir = 0;
-    //   speed = 0;
-    // }
-    // else {
-    //   // //slow down
-    //   // speed *= 0.001;
-    //   // dir *= 0.001;
-
 
     // }
 
@@ -298,25 +277,6 @@ int main(int _argc, char **_argv) {
 
   if (key == key_esc)
     break;
-    // if (((key == key_up)||(key == key_w)) && (speed <= 1.2f))
-    //   speed += 0.05;
-    //else if (((key == key_down)||(key == key_s)) && (speed >= -1.2f))
-      //speed -= 0.05;
-    // if (((key == key_right)||(key == key_d)) && (dir <= 0.4f))    //else if 
-    //   dir += 0.05;
-    // else if (((key == key_left)||(key == key_a)) && (dir >= -0.4f))
-    //   dir -= 0.05;
-    // else if (key == key_space)
-    // {
-    //   dir = 0;
-    //   speed = 0;
-    // }
-    // else {
-    //   // //slow down
-    //   // speed *= 0.001;
-    //   // dir *= 0.001;
-
-    // }
 
   // //test
   //std::cout << "speed: " << speed << std::endl;
@@ -337,8 +297,6 @@ int main(int _argc, char **_argv) {
     /********** HOUGH TRANSFORM **********/
 
     cv::Mat cam_cal = hough(cam);
-
-
 
     if( !(cam_cal.size().width == 0 && cam_cal.size().height == 0) )
     {
