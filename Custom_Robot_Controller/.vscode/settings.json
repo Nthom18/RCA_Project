@@ -75,10 +75,15 @@
         "cinttypes": "cpp",
         "typeindex": "cpp",
         "typeinfo": "cpp",
+<<<<<<< HEAD
         "variant": "cpp"
 <<<<<<< HEAD
     }
 =======
+=======
+        "variant": "cpp",
+        "*.ipp": "cpp"
+>>>>>>> CV_Hough
     },
     "cmake.configureOnOpen": true
 >>>>>>> 2705ce39be312c651bb5ab2d542fd7242fc690b2

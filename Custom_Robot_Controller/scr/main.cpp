@@ -14,10 +14,12 @@
 #include "../include/GazeboFunctions.hpp"
 #include "keyboardControl.cpp"
 #include "fuzzyController.cpp"
+#include "cv.hpp"
 
 
 /*   main   */
 int main(int _argc, char **_argv) {
+
   
   /********** GAZEBO SETUP SETUP **********/
   // Load gazebo
@@ -53,7 +55,6 @@ int main(int _argc, char **_argv) {
   worldPublisher->Publish(controlMessage);
 
 
-<<<<<<< HEAD
   //Setup fuzzy control
   //using namespace fl;
 
@@ -172,14 +173,12 @@ int main(int _argc, char **_argv) {
   mamdani->addRule(fl::Rule::parse("if obstacleRight is close or obstacleLeft is close or obstacleCenter is close then mSpeed is slow", engine));
   mamdani->addRule(fl::Rule::parse("if obstacleRight is visible or obstacleLeft is visible or obstacleCenter is visible then mSpeed is maximum", engine));
   engine->addRuleBlock(mamdani);
-=======
-  /********** FUZZY CONTROL SETUP **********/
-  fl::Engine* engine = new fl::Engine;
-  fl::InputVariable* obstacle = new fl::InputVariable;
-  fl::OutputVariable* mSteer = new fl::OutputVariable;
-  fuzzyController(engine, obstacle, mSteer);
->>>>>>> 2705ce39be312c651bb5ab2d542fd7242fc690b2
 
+  /********** FUZZY CONTROL SETUP **********/
+  // fl::Engine* engine = new fl::Engine;
+  // fl::InputVariable* obstacle = new fl::InputVariable;
+  // fl::OutputVariable* mSteer = new fl::OutputVariable;
+  // fuzzyController(engine, obstacle, mSteer);
 
 
 
@@ -195,8 +194,6 @@ int main(int _argc, char **_argv) {
     /********** FUZZY CONTROL **********/
     // Fuzzyfication - Test fuzzylite using center distance
       // Convert the distance from robot to an obstacle to a value between 0-1.
-<<<<<<< HEAD
-
 
 
 
@@ -226,9 +223,7 @@ int main(int _argc, char **_argv) {
 
 
     //old version
-=======
-    fl::scalar location = obstacle->getMinimum() + center_distance * (obstacle->range() / lidarMaxRange);
->>>>>>> 2705ce39be312c651bb5ab2d542fd7242fc690b2
+
       // Give value to input variable
     //obstacle->setValue(location);
 
@@ -248,18 +243,19 @@ int main(int _argc, char **_argv) {
       // Process fuzzylite
     engine->process();
       //Output fuzzylite
-<<<<<<< HEAD
+
     fl::scalar fuzzyOutputDir = mSteer->getValue();
     fl::scalar fuzzyOutputSpeed = mSpeed->getValue();
     // //outcommented to test
     // std::cout << "ObstacleL.input = " << Op::str(locationL) <<"ObstacleR.input = " << Op::str(locationR) << "=>" << "steer.output = "<< Op::str(fuzzyOutputDir) << std::endl;
     // std::cout << "OL.in = " << Op::str(locationL) <<" OC.input = " << Op::str(locationC) << " OR.input = " << Op::str(locationR) << "=>" << "speed.output = "<< Op::str(fuzzyOutputSpeed) << std::endl;
     
-=======
-    fl::scalar fuzzyOutput = mSteer->getValue();
-    std::cout << fl::Op::str(fuzzyOutput) << std::endl;
->>>>>>> 2705ce39be312c651bb5ab2d542fd7242fc690b2
-    
+
+
+    // std::cout << fl::Op::str(fuzzyOutput) << std::endl;
+
+    // std::cout << fl::Op::str(fuzzyOutput) << std::endl;
+
     
   //Original version
     // if (key == key_esc)
@@ -283,7 +279,7 @@ int main(int _argc, char **_argv) {
     //   // speed *= 0.001;
     //   // dir *= 0.001;
 
-<<<<<<< HEAD
+
     // }
 
   //Speed max 1.25,
@@ -325,8 +321,6 @@ int main(int _argc, char **_argv) {
   // //test
   //std::cout << "speed: " << speed << std::endl;
   // std::cout << "direction: " << dir << std::endl;
-=======
->>>>>>> 2705ce39be312c651bb5ab2d542fd7242fc690b2
 
     // Generate a pose
     ignition::math::Pose3d pose(double(speed), 0, 0, 0, 0, double(dir));
@@ -339,25 +333,19 @@ int main(int _argc, char **_argv) {
     movementPublisher->Publish(msg);
 
 
-  /********** CAMERA AND MAP TEST **********/
-  
-    /*  Get map from var map declared in GlobalVars.hpp */
-    // // Show map:
-    // if (!map.data) {
-    //     return 1;
-    // }
-    // mutex.lock();
-    // cv::imshow("Map", map);
-    // mutex.unlock();
 
-    /*  Get camera stream from var cam declared in GlobalVars.hpp 
-        and updated in GazeboFunctions.hpp */
+    /********** HOUGH TRANSFORM **********/
 
-    // // Proof camera is accessable from var cam:    
-    // mutex.lock();
-    // cv::imshow("camera2", cam);
-    // mutex.unlock();
+    cv::Mat cam_cal = hough(cam);
 
+
+
+    if( !(cam_cal.size().width == 0 && cam_cal.size().height == 0) )
+    {
+      mutex.lock();
+      cv::imshow("Hough Detection", cam_cal);
+      mutex.unlock();
+    }
   }
   // Make sure to shut everything down.
   gazebo::client::shutdown();
