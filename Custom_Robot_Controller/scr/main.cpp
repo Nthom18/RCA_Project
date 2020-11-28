@@ -53,7 +53,6 @@ int main(int _argc, char **_argv) {
   worldPublisher->Publish(controlMessage);
 
 
-<<<<<<< HEAD
   //Setup fuzzy control
   //using namespace fl;
 
@@ -80,11 +79,11 @@ int main(int _argc, char **_argv) {
   obstacleLeft->setName("obstacleLeft");
   obstacleLeft->setDescription("");
   obstacleLeft->setEnabled(true);
-  obstacleLeft->setRange(0.000 , 1.000);
+  obstacleLeft->setRange(0.000 , 1.000); //0.000 , 1.000);
   obstacleLeft->setLockValueInRange(false);
   obstacleLeft->addTerm(new fl::Ramp("veryClose", 0.500, 0.000, 1.0));
   obstacleLeft->addTerm(new fl::Triangle("close", 0.250, 0.500, 0.750, 1.0));
-  obstacleLeft->addTerm(new fl::Triangle("visible", 0.000, 0.250, 0.500, 1.0));
+  obstacleLeft->addTerm(new fl::Triangle("visible", 0.500, 0.750, 1.000, 1.0));//0.000, 0.250, 0.500, 1.0));
   engine->addInputVariable(obstacleLeft);
 
   fl::InputVariable* obstacleCenter = new fl::InputVariable;
@@ -95,18 +94,18 @@ int main(int _argc, char **_argv) {
   obstacleCenter->setLockValueInRange(false);
   obstacleCenter->addTerm(new fl::Ramp("veryClose", 0.500, 0.000, 1.0));
   obstacleCenter->addTerm(new fl::Triangle("close", 0.250, 0.500, 0.750, 1.0));
-  obstacleCenter->addTerm(new fl::Triangle("visible", 0.000, 0.250, 0.500, 1.0));
+  obstacleCenter->addTerm(new fl::Triangle("visible", 0.500, 0.750, 1.000, 1.0));//0.000, 0.250, 0.500, 1.0));
   engine->addInputVariable(obstacleCenter);
 
     fl::InputVariable* obstacleRight = new fl::InputVariable;
   obstacleRight->setName("obstacleRight");
   obstacleRight->setDescription("");
   obstacleRight->setEnabled(true);
-  obstacleRight->setRange(1.000 , 0.000);
+  obstacleRight->setRange(0.000 , 1.000);
   obstacleRight->setLockValueInRange(false);
   obstacleRight->addTerm(new fl::Ramp("veryClose", 0.500, 0.000, 1.0));
   obstacleRight->addTerm(new fl::Triangle("close", 0.250, 0.500, 0.750, 1.0));
-  obstacleRight->addTerm(new fl::Triangle("visible", 0.000, 0.250, 0.500, 1.0));
+  obstacleRight->addTerm(new fl::Triangle("visible", 0.500, 0.750, 1.000, 1.0));//0.000, 0.250, 0.500, 1.0));
   engine->addInputVariable(obstacleRight);
   
  
@@ -115,11 +114,11 @@ int main(int _argc, char **_argv) {
   mSpeed->setName("mSpeed");
   mSpeed->setDescription("");
   mSpeed->setEnabled(true);
-  mSpeed->setRange(1.000, 0.000);
+  mSpeed->setRange(0.000, 1.000);
   mSpeed->setLockValueInRange(false);
   mSpeed->setAggregation(new fl::Maximum);
   mSpeed->setDefuzzifier(new fl::Centroid(100));
-  mSpeed->setDefaultValue(fl::nan);
+  mSpeed->setDefaultValue(1.000);
   mSpeed->setLockPreviousValue(false);
   mSpeed->addTerm(new fl::Ramp("break", 0.5, 0, 1.0));
   mSpeed->addTerm(new fl::Triangle("slow", 0.250, 0.500, 0.750, 1.0));
@@ -132,11 +131,11 @@ int main(int _argc, char **_argv) {
   mSteer->setName("mSteer");
   mSteer->setDescription("");
   mSteer->setEnabled(true);
-  mSteer->setRange(1.000, 0.000);
+  mSteer->setRange(0.000, 1.000);
   mSteer->setLockValueInRange(false);
-  mSteer->setAggregation(new fl::Maximum);
+  mSteer->setAggregation(new fl::NormalizedSum);
   mSteer->setDefuzzifier(new fl::Centroid(100));
-  mSteer->setDefaultValue(fl::nan);
+  mSteer->setDefaultValue(0.5);
   mSteer->setLockPreviousValue(false);
 
 
@@ -157,8 +156,8 @@ int main(int _argc, char **_argv) {
   mamdani->setDescription("");
   mamdani->setEnabled(true);
   mamdani->setConjunction(fl::null);
-  mamdani->setDisjunction(new fl::Maximum);
-  mamdani->setImplication(new fl::AlgebraicProduct);
+  mamdani->setDisjunction(new fl::NormalizedSum);///new fl::WeightedSum); //new fl::Maximum
+  mamdani->setImplication(new fl::BoundedDifference);//AlgebraicProduct);
   mamdani->setActivation(new fl::General);
   //Direction
   mamdani->addRule(fl::Rule::parse("if obstacleLeft is veryClose then mSteer is hardRight", engine));
@@ -172,14 +171,6 @@ int main(int _argc, char **_argv) {
   mamdani->addRule(fl::Rule::parse("if obstacleRight is close or obstacleLeft is close or obstacleCenter is close then mSpeed is slow", engine));
   mamdani->addRule(fl::Rule::parse("if obstacleRight is visible or obstacleLeft is visible or obstacleCenter is visible then mSpeed is maximum", engine));
   engine->addRuleBlock(mamdani);
-=======
-  /********** FUZZY CONTROL SETUP **********/
-  fl::Engine* engine = new fl::Engine;
-  fl::InputVariable* obstacle = new fl::InputVariable;
-  fl::OutputVariable* mSteer = new fl::OutputVariable;
-  fuzzyController(engine, obstacle, mSteer);
->>>>>>> 2705ce39be312c651bb5ab2d542fd7242fc690b2
-
 
 
 
@@ -195,10 +186,6 @@ int main(int _argc, char **_argv) {
     /********** FUZZY CONTROL **********/
     // Fuzzyfication - Test fuzzylite using center distance
       // Convert the distance from robot to an obstacle to a value between 0-1.
-<<<<<<< HEAD
-
-
-
 
 
     // for (int i = 0; i < lidarMaxRange; i++)
@@ -224,11 +211,11 @@ int main(int _argc, char **_argv) {
     //std::cout << "Location: " << location << std::endl;
     //end test 
 
-
+    std::cout << "LocationL: " << locationL << std::endl;
+    std::cout << "LocationC  " << locationC << std::endl;
+    std::cout << "LocationR: " << locationR << std::endl;
     //old version
-=======
-    fl::scalar location = obstacle->getMinimum() + center_distance * (obstacle->range() / lidarMaxRange);
->>>>>>> 2705ce39be312c651bb5ab2d542fd7242fc690b2
+
       // Give value to input variable
     //obstacle->setValue(location);
 
@@ -248,85 +235,39 @@ int main(int _argc, char **_argv) {
       // Process fuzzylite
     engine->process();
       //Output fuzzylite
-<<<<<<< HEAD
+
     fl::scalar fuzzyOutputDir = mSteer->getValue();
     fl::scalar fuzzyOutputSpeed = mSpeed->getValue();
     // //outcommented to test
     // std::cout << "ObstacleL.input = " << Op::str(locationL) <<"ObstacleR.input = " << Op::str(locationR) << "=>" << "steer.output = "<< Op::str(fuzzyOutputDir) << std::endl;
     // std::cout << "OL.in = " << Op::str(locationL) <<" OC.input = " << Op::str(locationC) << " OR.input = " << Op::str(locationR) << "=>" << "speed.output = "<< Op::str(fuzzyOutputSpeed) << std::endl;
-    
-=======
-    fl::scalar fuzzyOutput = mSteer->getValue();
-    std::cout << fl::Op::str(fuzzyOutput) << std::endl;
->>>>>>> 2705ce39be312c651bb5ab2d542fd7242fc690b2
-    
-    
-  //Original version
-    // if (key == key_esc)
-    //   break;
 
-    // if (((key == key_up)||(key == key_w)) && (speed <= 1.2f))
-    //   speed += 0.05;
-    // else if (((key == key_down)||(key == key_s)) && (speed >= -1.2f))
-    //   speed -= 0.05;
-    // else if (((key == key_right)||(key == key_d)) && (dir <= 0.4f))
-    //   dir += 0.05;
-    // else if (((key == key_left)||(key == key_a)) && (dir >= -0.4f))
-    //   dir -= 0.05;
-    // else if (key == key_space)
-    // {
-    //   dir = 0;
-    //   speed = 0;
-    // }
-    // else {
-    //   // //slow down
-    //   // speed *= 0.001;
-    //   // dir *= 0.001;
 
-<<<<<<< HEAD
-    // }
+    if( ( (speed - ( (float) fuzzyOutputSpeed * 1.25) ) > 0.05) || ( ( ( (float) fuzzyOutputSpeed * 1.25)  - speed) > 0.05)) //If the difference is greater than 0.05
+    {
+      speed = (float) (fuzzyOutputSpeed * 1.25); //1.25;}
+      std::cout << "hello from the other inside!" << std::endl;
+    }  
 
-  //Speed max 1.25,
-  //dir max +-0.4
 
-  //Altered version½
-  // if (speed != 1.25)
-  // {
+    if(((((float) fuzzyOutputDir * 0.8)-0.4) - dir)  > 0.05)//(((dir - ((float) fuzzyOutputDir * 0.8)-0.4) > 0.05) || (((((float) fuzzyOutputDir * 0.8)-0.4) - dir)  > 0.05))
+    {
+      dir = -0.3;//((float) fuzzyOutputDir * 0.8)-0.4;
+      std::cout << "hello from the inside!" << std::endl;
+    }
     
-  // }
-  if(speed != (float) fuzzyOutputSpeed * 1.25)
-    speed = (float) fuzzyOutputSpeed * 1.25; //1.25;}
-  
+    std::cout << "Dir - stuff: " << (dir - (((float) fuzzyOutputDir * 0.8)-0.4) > 0.01) << " or stuff- dir: " << (((((float) fuzzyOutputDir * 0.8)-0.4) - dir)) << std::endl;
+    std::cout << "fuzzyOutDir: " << fuzzyOutputDir << "  dir calculated: "<< ((float) fuzzyOutputDir * 0.8)-0.4 << " ->  dir: " << dir << std::endl;
+
+
+//(((float) fuzzyOutputDir * 0.8)-0.4)
+
+
   // if(dir != (float) fuzzyOutputDir * 0.4)
   //   dir = (float) fuzzyOutputDir * 0.4;
 
   if (key == key_esc)
     break;
-    // if (((key == key_up)||(key == key_w)) && (speed <= 1.2f))
-    //   speed += 0.05;
-    //else if (((key == key_down)||(key == key_s)) && (speed >= -1.2f))
-      //speed -= 0.05;
-    // if (((key == key_right)||(key == key_d)) && (dir <= 0.4f))    //else if 
-    //   dir += 0.05;
-    // else if (((key == key_left)||(key == key_a)) && (dir >= -0.4f))
-    //   dir -= 0.05;
-    // else if (key == key_space)
-    // {
-    //   dir = 0;
-    //   speed = 0;
-    // }
-    // else {
-    //   // //slow down
-    //   // speed *= 0.001;
-    //   // dir *= 0.001;
-
-    // }
-
-  // //test
-  //std::cout << "speed: " << speed << std::endl;
-  // std::cout << "direction: " << dir << std::endl;
-=======
->>>>>>> 2705ce39be312c651bb5ab2d542fd7242fc690b2
 
     // Generate a pose
     ignition::math::Pose3d pose(double(speed), 0, 0, 0, 0, double(dir));
