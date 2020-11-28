@@ -22,6 +22,11 @@
 /*   main   */
 int main(int _argc, char **_argv) {
 
+  // Load image
+  cv::Mat image = cv::imread("../../Gazebo/models/bigworld/meshes/floor_plan.png");
+  cv::Mat resize_image;
+  cv::resize(image, resize_image, cv::Size(), 7, 7, cv::INTER_NEAREST);
+
   /********** GAZEBO SETUP SETUP **********/
   // Load gazebo
   gazebo::client::setup(_argc, _argv);
