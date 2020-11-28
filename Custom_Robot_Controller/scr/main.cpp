@@ -8,12 +8,14 @@
 #include <iostream>
 #include <vector>
 #include <math.h>
+#include <thread>
 
 #include "../include/functions.hpp"
 #include "../include/GlobalVars.hpp"
 #include "../include/GazeboFunctions.hpp"
 #include "keyboardControl.cpp"
 #include "fuzzyController.cpp"
+#include "ParticleFilter.hpp"
 #include "cv.hpp"
 
 
@@ -71,12 +73,20 @@ int main(int _argc, char **_argv) {
   fuzzyController(engine, obstacleLeft, obstacleCenter, obstacleRight,
   mSpeed, mSteer, mamdani);
 
+
+  cv::Point topLeftCorner = cv::Point(-34.89 , 24.6);
+  cv::Point buttomRightCorner = cv::Point(41.36, -25.96);
+
+  ParticleFilter localise(resize_image, topLeftCorner, buttomRightCorner);
+
   // Loop
   while (true) {
     gazebo::common::Time::MSleep(10);
     
     static float dir = 0.0;
     static float speed = 0.0;
+
+    localise.CreateParticles(center_distance);
 
     /********** CONTROL WITH KEYBOARD **********/
     keyboardControl(&dir, &speed);
