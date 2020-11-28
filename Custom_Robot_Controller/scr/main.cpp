@@ -20,7 +20,6 @@
 /*   main   */
 int main(int _argc, char **_argv) {
 
-  
   /********** GAZEBO SETUP SETUP **********/
   // Load gazebo
   gazebo::client::setup(_argc, _argv);
@@ -190,7 +189,7 @@ int main(int _argc, char **_argv) {
     static float speed = 0.0;
 
     /********** CONTROL WITH KEYBOARD **********/
-    // keyboardControl(&dir, &speed);
+    keyboardControl(&dir, &speed);
 
 
     /********** FUZZY CONTROL **********/
@@ -212,12 +211,18 @@ int main(int _argc, char **_argv) {
 
 
     //scalar location = obstacle->getMinimum() + center_distance * (obstacle->range() / lidarMaxRange);
+    
+    
+    
     fl::scalar locationL = obstacleLeft->getMinimum() + left_distance * (obstacleLeft->range() / lidarMaxRange);
     obstacleLeft->setValue(locationL);
     fl::scalar locationR = obstacleRight->getMinimum() + right_distance * (obstacleRight->range() / lidarMaxRange);
     obstacleRight->setValue(locationR);
     fl::scalar locationC = obstacleCenter->getMinimum() + center_distance * (obstacleCenter->range() / lidarMaxRange);
     obstacleCenter->setValue(locationC);
+
+
+
     //obstacleRight->setValue(locationL);
     //test 
     //std::cout << "Location: " << location << std::endl;
@@ -269,8 +274,18 @@ int main(int _argc, char **_argv) {
   // {
     
   // }
-  if(speed != (float) fuzzyOutputSpeed * 1.25)
-    speed = (float) fuzzyOutputSpeed * 1.25; //1.25;}
+
+
+
+
+
+   /***************************************/
+  // if(speed != (float) fuzzyOutputSpeed * 1.25)
+  //   speed = (float) fuzzyOutputSpeed * 1.25; //1.25;}
+     /***************************************/
+
+
+
   
   // if(dir != (float) fuzzyOutputDir * 0.4)
   //   dir = (float) fuzzyOutputDir * 0.4;

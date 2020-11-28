@@ -25,6 +25,7 @@ cv::Mat calibrate(cv::Mat img)
 
 cv::Mat hough(cv::Mat img)
 {
+    int radius;
     static std::vector<cv::Vec3f> circles;
 
     circles.clear();
@@ -32,10 +33,10 @@ cv::Mat hough(cv::Mat img)
         return img;
 
 
-    cv::Mat img_cal = calibrate(img);
+    cv::Mat img_hough = calibrate(img);
 
     static cv::Mat gray;
-    cvtColor(img_cal, gray, cv::COLOR_BGR2GRAY);
+    cvtColor(img_hough, gray, cv::COLOR_BGR2GRAY);
     
     medianBlur(gray, gray, 5);
     
@@ -50,27 +51,28 @@ cv::Mat hough(cv::Mat img)
         cv::Vec3i c = circles[i];
         cv::Point center = cv::Point(c[0], c[1]);
         // circle center
-        cv::circle( img_cal, center, 1, cv::Scalar(255,0,255), 3, cv::LINE_AA);
+        cv::circle( img_hough, center, 1, cv::Scalar(255,0,255), 3, cv::LINE_AA);
         // circle outline
-        int radius = c[2];
-        cv::circle( img_cal, center, radius, cv::Scalar(255,0,255), 1, cv::LINE_AA);
-        
-        float a = distanceToMarble(c[2]);
-        // std::cout << "Distance: " << a << std::endl;
+        radius = c[2];
+        cv::circle( img_hough, center, radius, cv::Scalar(255,0,255), 1, cv::LINE_AA);
     }
-    return img_cal;
+
+    float a = distanceToMarble(radius);
+
+    return img_hough;
 }
 
 float distanceToMarble(int rdx)
 {
     static const int r = 1;
     float a = FOCAL_LENGTH/(rdx*r);
+
+    // std::cout << "HOUGH: " << a << std::endl;
     
     return a;
 }
 
-
-void track(cv::Mat map, float x, float y)
+void trackOnMap(cv::Mat map, float x, float y)
 {
     static int color = 240;
     static int i = COLOR_COUNT;
