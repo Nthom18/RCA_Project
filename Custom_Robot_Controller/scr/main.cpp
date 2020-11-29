@@ -91,7 +91,8 @@ int main(int _argc, char **_argv) {
     static float dir = 0.0;
     static float speed = 0.0;
 
-    localise.CreateParticles(center_distance);
+    /********** PARTICLE FILTER **********/
+    // localise.CreateParticles(center_distance);
 
     /********** CONTROL WITH KEYBOARD **********/
     keyboardControl(&dir, &speed);
