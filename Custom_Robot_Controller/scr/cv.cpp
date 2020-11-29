@@ -8,15 +8,13 @@
 
 cv::Mat calibrate(cv::Mat img)
 {
-    // static const float f = FOCAL_LENGTH;
-    static const float fx = 320
-    static const float fy = 240
+    static const float f = FOCAL_LENGTH;
     static const float cx = 320/2, cy = 240/2;
     // static const float k1 = 0.25, k2 = -0.12, k3 = 0.0;
     static const float k1 = 0.0, k2 = 0.0, k3 = 0.0;
     static const float p1 = -0.00028, p2 = -0.00005;
 
-    static const cv::Mat cameraMatrix = (cv::Mat1d(3, 3) << fx, 0, cx, 0, fy, cy, 0, 0, 1);
+    static const cv::Mat cameraMatrix = (cv::Mat1d(3, 3) << f, 0, cx, 0, f, cy, 0, 0, 1);
     static const cv::Mat distCoeffs = (cv::Mat1d(1, 5) << k1, k2, p1, p2, k3);
 
     static cv::Mat img_cal;
