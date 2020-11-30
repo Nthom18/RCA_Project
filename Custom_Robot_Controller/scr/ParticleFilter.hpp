@@ -12,6 +12,8 @@
 #include <random>
 #include <iostream>
 
+#define NUM_PARTICLES 50
+
 class ParticleFilter
 {
 public:
@@ -42,7 +44,7 @@ public:
         {
             // Generate X random points in a random look direction
             std::default_random_engine generator(std::time(0));
-            for(int i = 0 ; i < 10; i++)    // Choose how many particles used in program
+            for(int i = 0 ; i < NUM_PARTICLES; i++)    // Choose how many particles used in program
                                             // Problems working with over 10, but is unreliable
                                             // Should ideally be 200
             {
@@ -163,7 +165,7 @@ public:
         }
 
         // Draw particles
-        cv::imshow("animation", animation);
+        // cv::imshow("animation", animation);
     }
 
     std::vector<Particle> weights;

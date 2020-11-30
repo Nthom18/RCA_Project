@@ -112,7 +112,7 @@ int main(int _argc, char **_argv) {
     // std::cout << "LocationR: " << locationR << std::endl;
     // //end test
 
-    //OBS! Do not open gazebo_client.sh
+    // OBS! Do not open gazebo_client.sh
 
     // Process fuzzylite
     engine->process();

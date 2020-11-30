@@ -4,14 +4,13 @@
 #define COLOR_COUNT 25
 #define BORDER_WIDTH 25
 
-#define FOCAL_LENGTH 24.0524
+#define FOCAL_LENGTH 277.1914
 
 cv::Mat calibrate(cv::Mat img)
 {
     static const float f = FOCAL_LENGTH;
     static const float cx = 320/2, cy = 240/2;
-    // static const float k1 = 0.25, k2 = -0.12, k3 = 0.0;
-    static const float k1 = 0.0, k2 = 0.0, k3 = 0.0;
+    static const float k1 = -0.25, k2 = 0.12, k3 = 0.0;
     static const float p1 = -0.00028, p2 = -0.00005;
 
     static const cv::Mat cameraMatrix = (cv::Mat1d(3, 3) << f, 0, cx, 0, f, cy, 0, 0, 1);
@@ -57,17 +56,17 @@ cv::Mat hough(cv::Mat img)
         cv::circle( img_hough, center, radius, cv::Scalar(255,0,255), 1, cv::LINE_AA);
     }
 
-    float a = distanceToMarble(radius);
+    distanceToMarble(radius * 2);
 
     return img_hough;
 }
 
-float distanceToMarble(int rpx)
+float distanceToMarble(int dpx)
 {
-    static const int r = 1;
-    float a = FOCAL_LENGTH/(rpx*2 * r);
+    static const int d = 1;
+    float a = FOCAL_LENGTH/(dpx * d);
 
-    // std::cout << "HOUGH: " << a << std::endl;
+    std::cout << "HOUGH: " << a << std::endl;
     
     return a;
 }
