@@ -13,20 +13,34 @@ struct rectVector {
   float y;
 };
 
+struct interval {
+  int min;
+  int max;
+};
+
+
 class deadReckoning {
 public:
 
-    deadReckoning(){}
-    ~deadReckoning(){}
+  deadReckoning();
+  ~deadReckoning(){}
 
-    void updateMovement(float speed, float dir);
+  void updateMovement(float speed, float dir);
 
-    float x = 0;
-    float y = 0;
+  float x = 0;
+  float y = 0;
 
 private:
 
-    void printPos();
+  interval dirGazInterval;
+  interval radInterval;
+  
+  
+  polarVector polar;
+
+  float intervalMapping(float s, interval from, interval to);
+
+  void printPos();
 
 };
 #endif

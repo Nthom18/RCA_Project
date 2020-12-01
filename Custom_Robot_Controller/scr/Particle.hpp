@@ -22,8 +22,8 @@ public:
         LookDirection = _lookDirection;
     }
 
-    cv::Point Position;         // 
-    cv::Point LookDirection;    // A unit vector
+    cv::Point Position;         
+    cv::Point LookDirection;    
 
     float weight;
 

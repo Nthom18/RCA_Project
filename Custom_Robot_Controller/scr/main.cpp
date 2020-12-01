@@ -85,6 +85,8 @@ int main(int _argc, char **_argv) {
 
   ParticleFilter localise(resize_image, topLeftCorner, buttomRightCorner);
 
+  deadReckoning movement;
+
   // Loop
   while (true) {
     gazebo::common::Time::MSleep(10);
@@ -150,7 +152,12 @@ int main(int _argc, char **_argv) {
     movementPublisher->Publish(msg);
 
     /********** DEAD RECKONING **********/
-    
+    // std::cout << "speed: " << speed << " dir: " << dir << std::endl;
+    // static int i = 0;
+    // dir = 1;
+    // i++;
+    // std::cout << "i: " << i << std::endl;
+    movement.updateMovement(speed, dir);
 
     /********** HOUGH TRANSFORM **********/
     cv::Mat cam_cal = hough(cam);
