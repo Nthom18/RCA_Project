@@ -136,8 +136,7 @@ int main(int _argc, char **_argv) {
     // std::cout << "fuzzyOutDir: " << fuzzyOutputDir << "  dir calculated: "<< ((float) fuzzyOutputDir * 0.8)-0.4 << " ->  dir: " << dir << std::endl;
     // //end test
 /**********************************/
-  if (key == key_esc)
-    break;
+  
 
     // Generate a pose
     ignition::math::Pose3d pose(double(speed), 0, 0, 0, 0, double(dir));
@@ -151,7 +150,6 @@ int main(int _argc, char **_argv) {
 
 
     /********** HOUGH TRANSFORM **********/
-
     cv::Mat cam_cal = hough(cam);
 
     if( !(cam_cal.size().width == 0 && cam_cal.size().height == 0) )
@@ -160,6 +158,11 @@ int main(int _argc, char **_argv) {
       cv::imshow("Hough Detection", cam_cal);
       mutex.unlock();
     }
+
+
+    /******* GET OUT OF LOOP DURING RUNTIME *******/
+    if (key == key_esc)
+    break;
   }
   // Make sure to shut everything down.
   gazebo::client::shutdown();
