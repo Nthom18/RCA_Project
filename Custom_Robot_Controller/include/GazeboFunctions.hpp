@@ -150,7 +150,7 @@ void lidarCallback(ConstLaserScanStampedPtr &msg) {
     //   static int i = 0;
     //   if(i > 10)
     //   {
-    //     std::cout << "LIDAR: " << center_distance << std::endl;
+        // std::cout << "LIDAR: " << center_distance << std::endl;
     //     i = 0;
     //   }
     //   i++;
