@@ -16,6 +16,7 @@
 #include "keyboardControl.cpp"
 #include "fuzzyController.cpp"
 #include "ParticleFilter.hpp"
+#include "deadReckoning.hpp"
 #include "cv.hpp"
 
 
@@ -148,6 +149,8 @@ int main(int _argc, char **_argv) {
     gazebo::msgs::Set(&msg, pose);
     movementPublisher->Publish(msg);
 
+    /********** DEAD RECKONING **********/
+    
 
     /********** HOUGH TRANSFORM **********/
     cv::Mat cam_cal = hough(cam);
