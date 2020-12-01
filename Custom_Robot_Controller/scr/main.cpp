@@ -158,6 +158,10 @@ int main(int _argc, char **_argv) {
     // i++;
     // std::cout << "i: " << i << std::endl;
     movement.updateMovement(speed, dir);
+    
+    // mutex.lock();
+    //   cv::imshow("Movement tracker", movement.map);
+    // mutex.unlock();
 
     /********** HOUGH TRANSFORM **********/
     cv::Mat cam_cal = hough(cam);
