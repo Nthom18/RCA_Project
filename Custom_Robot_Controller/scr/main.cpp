@@ -151,6 +151,8 @@ int main(int _argc, char **_argv) {
     gazebo::msgs::Set(&msg, pose);
     movementPublisher->Publish(msg);
 
+
+
     /********** DEAD RECKONING **********/
     // std::cout << "speed: " << speed << " dir: " << dir << std::endl;
     // static int i = 0;
@@ -162,6 +164,8 @@ int main(int _argc, char **_argv) {
     // mutex.lock();
     //   cv::imshow("Movement tracker", movement.map);
     // mutex.unlock();
+
+
 
     /********** HOUGH TRANSFORM **********/
     cv::Mat cam_cal = hough(cam);
