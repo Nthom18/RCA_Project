@@ -159,7 +159,7 @@ int main(int _argc, char **_argv) {
     // dir = 1;
     // i++;
     // std::cout << "i: " << i << std::endl;
-    movement.updateMovement(speed, dir);
+    // movement.updateMovement(speed, dir);
     
     // mutex.lock();
     //   cv::imshow("Movement tracker", movement.map);
@@ -169,6 +169,7 @@ int main(int _argc, char **_argv) {
 
     /********** HOUGH TRANSFORM **********/
     cv::Mat cam_cal = hough(cam);
+    // cv::Mat cam_cal = cam.clone();
 
     if( !(cam_cal.size().width == 0 && cam_cal.size().height == 0) )
     {
@@ -176,6 +177,11 @@ int main(int _argc, char **_argv) {
       cv::imshow("Hough Detection", cam_cal);
       mutex.unlock();
     }
+
+    // static int k = 0;
+    // if (k > 100)
+    //     imwrite("D:/MyImage.jpg", cam_cal); //write the image to a file as JPEG 
+    // k++;
 
 
     /******* GET OUT OF LOOP DURING RUNTIME *******/
