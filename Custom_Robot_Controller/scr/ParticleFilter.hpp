@@ -136,6 +136,15 @@ public:
                 }
             }
 
+
+            
+
+            /********************* MOVE THEM HERE ***********************/
+
+
+
+
+
             // Recalculate all particles weight
             weightsCopy = weights;
             for(int i = 0; i < weightsCopy.size(); i++)

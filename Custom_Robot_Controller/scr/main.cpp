@@ -16,6 +16,7 @@
 #include "keyboardControl.cpp"
 #include "fuzzyController.cpp"
 #include "ParticleFilter.hpp"
+#include "deadReckoning.hpp"
 #include "cv.hpp"
 
 
@@ -84,6 +85,8 @@ int main(int _argc, char **_argv) {
 
   ParticleFilter localise(resize_image, topLeftCorner, buttomRightCorner);
 
+  deadReckoning movement;
+
   // Loop
   while (true) {
     gazebo::common::Time::MSleep(10);
@@ -136,8 +139,7 @@ int main(int _argc, char **_argv) {
     // std::cout << "fuzzyOutDir: " << fuzzyOutputDir << "  dir calculated: "<< ((float) fuzzyOutputDir * 0.8)-0.4 << " ->  dir: " << dir << std::endl;
     // //end test
 /**********************************/
-  if (key == key_esc)
-    break;
+  
 
     // Generate a pose
     ignition::math::Pose3d pose(double(speed), 0, 0, 0, 0, double(dir));
@@ -149,10 +151,21 @@ int main(int _argc, char **_argv) {
     gazebo::msgs::Set(&msg, pose);
     movementPublisher->Publish(msg);
 
+    /********** DEAD RECKONING **********/
+    // std::cout << "speed: " << speed << " dir: " << dir << std::endl;
+    // static int i = 0;
+    // dir = 1;
+    // i++;
+    // std::cout << "i: " << i << std::endl;
+    // movement.updateMovement(speed, dir);
+    
+    // mutex.lock();
+    //   cv::imshow("Movement tracker", movement.map);
+    // mutex.unlock();
 
     /********** HOUGH TRANSFORM **********/
-
     cv::Mat cam_cal = hough(cam);
+    // cv::Mat cam_cal = cam.clone();
 
     if( !(cam_cal.size().width == 0 && cam_cal.size().height == 0) )
     {
@@ -160,6 +173,16 @@ int main(int _argc, char **_argv) {
       cv::imshow("Hough Detection", cam_cal);
       mutex.unlock();
     }
+
+    // static int k = 0;
+    // if (k > 100)
+    //     imwrite("D:/MyImage.jpg", cam_cal); //write the image to a file as JPEG 
+    // k++;
+
+
+    /******* GET OUT OF LOOP DURING RUNTIME *******/
+    if (key == key_esc)
+    break;
   }
   // Make sure to shut everything down.
   gazebo::client::shutdown();
