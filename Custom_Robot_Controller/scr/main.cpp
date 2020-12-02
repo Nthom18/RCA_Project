@@ -164,8 +164,8 @@ int main(int _argc, char **_argv) {
     // mutex.unlock();
 
     /********** HOUGH TRANSFORM **********/
-    // cv::Mat cam_cal = hough(cam);
-    cv::Mat cam_cal = cam.clone();
+    cv::Mat cam_cal = hough(cam);
+    // cv::Mat cam_cal = cam.clone();
 
     if( !(cam_cal.size().width == 0 && cam_cal.size().height == 0) )
     {
@@ -174,25 +174,23 @@ int main(int _argc, char **_argv) {
       mutex.unlock();
     }
 
-    static int ii = 0;
-    static int k = 0;
-    std::string imgPath = "../HoughTestImages/houghTest" + std::to_string(ii) + ".png";
+    // static int ii = 0;
+    // static int k = 0;
+    // std::string imgPath = "../HoughTestImages/houghTest" + std::to_string(ii) + ".png";
 
-    if (k > 1000)
-    {
-        bool isSuccess = cv::imwrite(imgPath, cam_cal); //write the image to a file as JPEG 
-        if (isSuccess == false)
-        {
-            std::cout << "Failed to save the image" << std::endl;
-            return -1;
-        }
-        std::cout << "Snapshot nr.  " << ii << std::endl;
-        ii++;
-        k = 0;
-    }
-    
-    
-    k++;
+    // if (k > 1000)
+    // {
+    //     bool isSuccess = cv::imwrite(imgPath, cam_cal); //write the image to a file as JPEG 
+    //     if (isSuccess == false)
+    //     {
+    //         std::cout << "Failed to save the image" << std::endl;
+    //         return -1;
+    //     }
+    //     std::cout << "Snapshot nr.  " << ii << std::endl;
+    //     ii++;
+    //     k = 0;
+    // }
+    // k++;
 
 
     /******* GET OUT OF LOOP DURING RUNTIME *******/
