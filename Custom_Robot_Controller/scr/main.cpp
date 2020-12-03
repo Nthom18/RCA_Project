@@ -82,7 +82,7 @@ int main(int _argc, char **_argv) {
 
   cv::Point topLeftCorner = cv::Point(-34.89 , 24.6);
   cv::Point buttomRightCorner = cv::Point(41.36, -25.96);
-
+  
   ParticleFilter localise(resize_image, topLeftCorner, buttomRightCorner);
 
   deadReckoning movement;
