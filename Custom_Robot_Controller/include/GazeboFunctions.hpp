@@ -121,92 +121,45 @@ void lidarCallback(ConstLaserScanStampedPtr &msg) {
               cv::Scalar(255, 0, 0));
 
 
-
-// //original
-//   left_distance = std::min(float(msg->scan().ranges(nranges * 1/4)), range_max);
-//   center_distance = std::min(float(msg->scan().ranges(nranges * 1/2)), range_max);
-//   right_distance = std::min(float(msg->scan().ranges(nranges * 3/4)), range_max);
-//   std::cout << "LIDAR: " << center_distance + 0.5 << std::endl;
-//   // std::cout << std::endl << "Left " << left_distance << " , Center " << 
-//   // center_distance << " , Right " << right_distance << std::endl;
-// //End original
-
-//Altered 
   //determine closest point to the left, center and right
   left_distance = 10;
   right_distance = 10;
   center_distance = 10;
-  for (int i = 0; i < nranges*1/3; i++)
+  for (int i = 0; i < nranges*1/2; i++)
   {
     if (std::min(float(msg->scan().ranges(i)), range_max) < left_distance)
     {
       left_distance = std::min(float(msg->scan().ranges(i)), range_max);
-      //std::cout << "Left_distance right after assignment: " << left_distance << std::endl;
     }
-
-    if (std::min(float(msg->scan().ranges((nranges/3)+i)), range_max) < center_distance)
+    if (std::min(float(msg->scan().ranges((nranges/2)+i)), range_max) < right_distance)
+    {
+      right_distance = std::min(float(msg->scan().ranges((nranges/2)+i)), range_max);
+    }
+  } 
+  for (int i = 0; i < nranges*1/5; i++)
+  {
+      if (std::min(float(msg->scan().ranges((nranges/5)*2+i)), range_max) < center_distance)
     {
       center_distance = std::min(float(msg->scan().ranges((nranges/3)+i)), range_max);
-      
-    //   // Reduce output of cout
-    //   static int i = 0;
-    //   if(i > 10)
-    //   {
-        // std::cout << "LIDAR: " << center_distance << std::endl;
-    //     i = 0;
-    //   }
-    //   i++;
     }
+  }
+  //   for (int i = 0; i < nranges*1/3; i++)
+  // {
+  //   if (std::min(float(msg->scan().ranges(i)), range_max) < left_distance)
+  //   {
+  //     left_distance = std::min(float(msg->scan().ranges(i)), range_max);
+  //   }
 
-    if (std::min(float(msg->scan().ranges((nranges/3)*2+i)), range_max) < right_distance)
-    {
-      right_distance = std::min(float(msg->scan().ranges((nranges/3)*2+i)), range_max);
-      
-    }
+  //   if (std::min(float(msg->scan().ranges((nranges/3)+i)), range_max) < center_distance)
+  //   {
+  //     center_distance = std::min(float(msg->scan().ranges((nranges/3)+i)), range_max);
+  //   }
 
- 
-                  //test
-      //std::cout << std::min(float(msg->scan().ranges(i*3)), range_max) << std::endl; 
-      //end test
-    //std::cout << left_distance << std::endl;
-    // std::cout << "Nranges: "<< nranges << std::endl;
-    // std::cout << "1/3 Nranges: " << (nranges * 1/3) << std::endl;
-    // std::cout <<  "min:(scan, nrange(1/4)): " << std::min(float(msg->scan().ranges(nranges * 1/4)), range_max);
-    // std::cout << std::endl;
-    // std::cout <<  "min:(scan, nrange(i)): " << std::min(float(msg->scan().ranges(i)), range_max);
-    // std::cout << std::endl;
-  } 
-  //std::cout << left_distance << std::endl;
-
-  // left_distance = std::min(float(msg->scan().ranges(nranges * 1/4)), range_max);
-  //center_distance = std::min(float(msg->scan().ranges(nranges * 1/2)), range_max);
-  //right_distance = std::min(float(msg->scan().ranges(nranges * 3/4)), range_max);
-  // std::cout << std::endl << "Left " << left_distance << " , Center " << 
-  // center_distance << " , Right " << right_distance << std::endl;
-//end altered
-
-
-    // //test
-    // std::cout << "after values assigned to distances" <<std::endl;
-
-    //end test
-
-
-  // left_distance = std::min(float(msg->scan().ranges(nranges * 1/4)), range_max);
-  // center_distance = std::min(float(msg->scan().ranges(nranges * 1/2)), range_max);
-  // right_distance = std::min(float(msg->scan().ranges(nranges * 3/4)), range_max);
-  // std::cout << std::endl << "Left " << left_distance << " , Center " << 
-  // center_distance << " , Right " << right_distance << std::endl;
-
-  //Save range output
-  /*
-  cv::Point2f frontStart(200.5f + range_min * px_per_m * std::cos(90),
-                        200.5f - range_min * px_per_m * std::sin(90));
-    cv::Point2f endpt(200.5f + range * px_per_m * std::cos(90),
-                      200.5f - range * px_per_m * std::sin(90));
-                      */
-  //distance = std::sqrt(std::pow(frontStart.x,2) + frontStart.y) - ;
-
+  //   if (std::min(float(msg->scan().ranges((nranges/3)*2+i)), range_max) < right_distance)
+  //   {
+  //     right_distance = std::min(float(msg->scan().ranges((nranges/3)*2+i)), range_max);
+  //   }
+  // } 
 
   mutex.lock();
   cv::imshow("lidar", im);

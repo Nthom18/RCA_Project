@@ -69,6 +69,7 @@ int main(int _argc, char **_argv) {
   fl::InputVariable* obstacleLeft = new fl::InputVariable;
   fl::InputVariable* obstacleCenter = new fl::InputVariable;
   fl::InputVariable* obstacleRight = new fl::InputVariable;
+  fl::InputVariable* obstacleDifferenceLR = new fl::InputVariable;
   //Setup output variable - speed
   fl::OutputVariable* mSpeed= new fl::OutputVariable;
   //Setup output variable - direction
@@ -76,7 +77,8 @@ int main(int _argc, char **_argv) {
   // Setup ruleblock
   fl::RuleBlock* mamdani = new fl::RuleBlock;
 
-  fuzzyController(engine, obstacleLeft, obstacleCenter, obstacleRight,
+
+  fuzzyController(engine, obstacleLeft, obstacleCenter, obstacleRight, obstacleDifferenceLR,
   mSpeed, mSteer, mamdani);
 
 
@@ -108,6 +110,7 @@ int main(int _argc, char **_argv) {
     obstacleRight->setValue(locationR);
     fl::scalar locationC = obstacleCenter->getMinimum() + center_distance * (obstacleCenter->range() / lidarMaxRange);
     obstacleCenter->setValue(locationC);
+    obstacleDifferenceLR ->setValue(locationL-locationR);
 
     // //Test
     // std::cout << "LocationL: " << locationL << std::endl;
@@ -124,15 +127,15 @@ int main(int _argc, char **_argv) {
     fl::scalar fuzzyOutputDir = mSteer->getValue();
     fl::scalar fuzzyOutputSpeed = mSpeed->getValue();
 /**********************************/
-    // if( ( (speed - ( (float) fuzzyOutputSpeed * 1.25) ) > 0.05) || ( ( ( (float) fuzzyOutputSpeed * 1.25)  - speed) > 0.05)) //If the difference is greater than 0.05
-    // {
-    //   speed = (float) (fuzzyOutputSpeed * 1.25);
-    // }  
+    if( ( (speed - ( (float) fuzzyOutputSpeed * 1.25) ) > 0.05) || ( ( ( (float) fuzzyOutputSpeed * 1.25)  - speed) > 0.05)) //If the difference is greater than 0.05
+    {
+      speed = (float) (fuzzyOutputSpeed * 1.25);
+    }  
 
-    // if((abs(dir - ((float) fuzzyOutputDir * 0.8)-0.4) > 0.05) || (((abs((float) fuzzyOutputDir * 0.8)-0.4) - dir)  > 0.05))  //((abs(((float) fuzzyOutputDir * 0.8)-0.4) - dir)  > 0.05)
-    // {
-    //   dir = ((float) fuzzyOutputDir * 0.8)-0.4;
-    // }
+    if((abs(dir - ((float) fuzzyOutputDir * 0.8)-0.4) > 0.05) || (((abs((float) fuzzyOutputDir * 0.8)-0.4) - dir)  > 0.05))  //((abs(((float) fuzzyOutputDir * 0.8)-0.4) - dir)  > 0.05)
+    {
+      dir = ((float) fuzzyOutputDir * 0.8)-0.4;
+    }
     
     // //test
     // std::cout << "Dir - stuff: " << (dir - (((float) fuzzyOutputDir * 0.8)-0.4) > 0.01) << " or stuff- dir: " << (((((float) fuzzyOutputDir * 0.8)-0.4) - dir)) << std::endl;
