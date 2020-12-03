@@ -121,7 +121,7 @@ void lidarCallback(ConstLaserScanStampedPtr &msg) {
               cv::Scalar(255, 0, 0));
 
 
-  //determine closest point to the left, center and right
+  // determine closest point to the left, center and right
   left_distance = 10;
   right_distance = 10;
   center_distance = 10;
@@ -140,7 +140,7 @@ void lidarCallback(ConstLaserScanStampedPtr &msg) {
   {
       if (std::min(float(msg->scan().ranges((nranges/5)*2+i)), range_max) < center_distance)
     {
-      center_distance = std::min(float(msg->scan().ranges((nranges/3)+i)), range_max);
+      center_distance = std::min(float(msg->scan().ranges((nranges/5)*2+i)), range_max);
     }
   }
   //   for (int i = 0; i < nranges*1/3; i++)
