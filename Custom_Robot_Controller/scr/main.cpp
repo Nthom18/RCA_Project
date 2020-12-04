@@ -112,11 +112,11 @@ int main(int _argc, char **_argv) {
     obstacleCenter->setValue(locationC);
     obstacleDifferenceLR ->setValue(locationL-locationR);
 
-    //Test
-    std::cout << "LocationL: " << locationL << std::endl;
-    std::cout << "LocationC  " << locationC << std::endl;
-    std::cout << "LocationR: " << locationR << std::endl;
-    //end test
+    // //Test
+    // std::cout << "LocationL: " << locationL << std::endl;
+    // std::cout << "LocationC  " << locationC << std::endl;
+    // std::cout << "LocationR: " << locationR << std::endl;
+    // //end test
 
     // OBS! Do not open gazebo_client.sh
 
