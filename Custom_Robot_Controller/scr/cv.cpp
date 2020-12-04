@@ -71,6 +71,14 @@ float CV::distanceToMarble(int dpx)
     return a;
 }
 
+void CV::printCircles()
+{
+    for( auto i : circles )
+    {
+        std::cout << i << std::endl;
+    }
+}
+
 
 
 

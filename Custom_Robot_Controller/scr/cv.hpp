@@ -13,6 +13,8 @@ public:
 
     float distanceToMarble(int rpx);
 
+    void printCircles();
+
     std::vector<cv::Vec3f> circles;
 
 private:

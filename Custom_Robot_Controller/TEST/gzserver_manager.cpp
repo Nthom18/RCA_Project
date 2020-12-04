@@ -14,13 +14,20 @@ int main()
         std::string command = "../../Gazebo/gazebo_server.sh ../../Gazebo/smallTestWorlds/" + world + " &";
         system(command.c_str());
 
-        sleep(2);
+        sleep(6);
         system("echo 1 > server_signal.txt");
 
-        sleep(5);
+        sleep(3);
+        system("> server_signal.txt");
+        system("echo 0 > server_signal.txt");
+        
+        sleep(1);
         system("pkill gzserver");
         system("> server_signal.txt");
         system("echo 0 > server_signal.txt");
     }
+
+    system("pkill robot_control");
+
     return 0;
 }
