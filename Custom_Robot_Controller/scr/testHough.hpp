@@ -1,6 +1,7 @@
 #include <opencv2/opencv.hpp>
 
 #include <iostream>
+#include <fstream>
 
 #include "cv.hpp"
 
@@ -15,6 +16,10 @@ void testHough(cv::Mat cam)
 
     if( (signal == 1) & newSession)
     {
+        newSession = false;
+
+        std::ofstream houghData("houghData.csv", std::ios::app);
+    
         CV cv;
         float sumx = 0, sumy = 0, sumr = 0;
         float av_sumx = 0, av_sumy = 0, av_sumr = 0;
@@ -34,9 +39,9 @@ void testHough(cv::Mat cam)
         av_sumy = sumy / TEST_NR;
         av_sumr = sumr / TEST_NR;
 
-        std::cout << av_sumx << " " << av_sumy << " " << av_sumr << std::endl;
-
-        newSession = false;
+        // std::cout << av_sumx << " " << av_sumy << " " << av_sumr << std::endl;
+        houghData << av_sumx << ", " << av_sumy << ", " << av_sumr << '\n';
+        houghData.close();
     }
 
     if( signal == 0 )
