@@ -19,6 +19,7 @@
 #include "deadReckoning.hpp"
 #include "cv.hpp"
 
+#include "testHough.hpp"
 
 /*   main   */
 int main(int _argc, char **_argv) {
@@ -87,6 +88,8 @@ int main(int _argc, char **_argv) {
 
   deadReckoning movement;
 
+  CV cv;
+
   // Loop
   while (true) {
     gazebo::common::Time::MSleep(10);
@@ -140,7 +143,6 @@ int main(int _argc, char **_argv) {
     // //end test
 /**********************************/
   
-
     // Generate a pose
     ignition::math::Pose3d pose(double(speed), 0, 0, 0, 0, double(dir));
     
@@ -164,8 +166,12 @@ int main(int _argc, char **_argv) {
     // mutex.unlock();
 
     /********** HOUGH TRANSFORM **********/
-    cv::Mat cam_cal = hough(cam);
-    // cv::Mat cam_cal = cam.clone();
+    
+    // cv::Mat cam_cal = cv.hough(cam);
+    
+    cv::Mat cam_cal = cam.clone();
+
+    testHough(cam);
 
     if( !(cam_cal.size().width == 0 && cam_cal.size().height == 0) )
     {

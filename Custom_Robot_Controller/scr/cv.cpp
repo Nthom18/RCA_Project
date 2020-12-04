@@ -6,7 +6,7 @@
 
 #define FOCAL_LENGTH 277.1914
 
-cv::Mat calibrate(cv::Mat img)
+cv::Mat CV::calibrate(cv::Mat img)
 {
     static const float f = FOCAL_LENGTH;
     static const float cx = 320/2, cy = 240/2;
@@ -22,10 +22,10 @@ cv::Mat calibrate(cv::Mat img)
     return img_cal;
 }
 
-cv::Mat hough(cv::Mat img)
+cv::Mat CV::hough(cv::Mat img)
 {
     int radius;
-    static std::vector<cv::Vec3f> circles;
+    // static std::vector<cv::Vec3f> circles;
 
     circles.clear();
     if( img.empty() )
@@ -61,7 +61,7 @@ cv::Mat hough(cv::Mat img)
     return img_hough;
 }
 
-float distanceToMarble(int dpx)
+float CV::distanceToMarble(int dpx)
 {
     static const int d = 1;
     float a = FOCAL_LENGTH/(dpx * d);
@@ -70,6 +70,12 @@ float distanceToMarble(int dpx)
     
     return a;
 }
+
+
+
+
+
+
 
 void trackOnMap(cv::Mat map, float x, float y)
 {
@@ -105,3 +111,4 @@ float intervalMapping(float s, cv::Point from, cv::Point to)
     float t = to.x + ((s - from.x)*(to.y - to.x))/(from.y - from.x);
     return t;
 }
+

@@ -49,7 +49,9 @@ void poseCallback(ConstPosesStampedPtr &_msg) {
                 << _msg->pose(i).orientation().x() << std::setw(6)
                 << _msg->pose(i).orientation().y() << std::setw(6)
                 << _msg->pose(i).orientation().z() << std::endl;*/
-      trackOnMap(mapO, _msg->pose(i).position().x(), _msg->pose(i).position().y());
+      
+      // trackOnMap(mapO, _msg->pose(i).position().x(), _msg->pose(i).position().y());
+      
       // std::cout << _msg->pose(i).orientation().z() << std::endl;
       // std::cout << _msg->pose(i).position().x() << std::endl;
     }
