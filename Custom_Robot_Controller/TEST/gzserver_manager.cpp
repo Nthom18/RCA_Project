@@ -17,7 +17,7 @@ int main()
         system("../CMake/robot_control &");
 
         // Time for server and program startup
-        sleep(4);
+        sleep(10);
         system("echo 1 > server_signal.txt");
 
         // Time for program to execute

@@ -9,13 +9,22 @@
 
 void testHough(cv::Mat cam)
 {
+    srand(time(0));
+
     static bool newSession = true;
     int signal = 0;
     FILE* coms = fopen("../TEST/server_signal.txt", "r");
     fscanf(coms, "%d", &signal);
 
+    
+    
+
     if( (signal == 1) & newSession)
     {
+        // Save image of cam
+        std::string imgPath = "../TEST/cam_snapshots/snapshot" + std::to_string(rand()) + ".png";
+        cv::imwrite(imgPath, cam);
+        
         newSession = false;
 
         std::ofstream houghData("houghData.csv", std::ios::app);
