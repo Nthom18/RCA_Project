@@ -20,6 +20,7 @@
 #include "cv.hpp"
 
 #include "testHough.hpp"
+#include "testDistance.hpp"
 
 /*   main   */
 int main(int _argc, char **_argv) {
@@ -173,6 +174,9 @@ int main(int _argc, char **_argv) {
 
     // TEST OF HOUGH - COMMENT IN TO PERFORM TEST
     // testHough(cam);
+
+    // TEST OF DISTANCE - COMMENT IN TO PERFORM TEST
+    testDistance(cam);
 
     if( !(cam_cal.size().width == 0 && cam_cal.size().height == 0) )
     {
