@@ -17,9 +17,7 @@ void testHough(cv::Mat cam)
     fscanf(coms, "%d", &signal);
 
     
-    
-
-    if( (signal == 1) & newSession)
+    if( (signal == 1) & newSession )
     {
         // Save image of cam
         std::string imgPath = "../TEST/cam_snapshots/snapshot" + std::to_string(rand()) + ".png";

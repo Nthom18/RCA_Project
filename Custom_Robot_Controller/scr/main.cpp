@@ -171,7 +171,8 @@ int main(int _argc, char **_argv) {
     
     cv::Mat cam_cal = cam.clone();
 
-    testHough(cam);
+    // TEST OF HOUGH - COMMENT IN TO PERFORM TEST
+    // testHough(cam);
 
     if( !(cam_cal.size().width == 0 && cam_cal.size().height == 0) )
     {
@@ -179,6 +180,8 @@ int main(int _argc, char **_argv) {
       cv::imshow("Hough Detection", cam_cal);
       mutex.unlock();
     }
+
+    
 
     // static int ii = 0;
     // static int k = 0;
