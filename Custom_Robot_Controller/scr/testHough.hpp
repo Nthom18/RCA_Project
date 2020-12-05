@@ -21,7 +21,7 @@ void testHough(cv::Mat cam)
     {
         // Save image of cam
         std::string imgPath = "../TEST/cam_snapshots/snapshot" + std::to_string(rand()) + ".png";
-        cv::imwrite(imgPath, cam);
+        // cv::imwrite(imgPath, cam);
         
         newSession = false;
 
