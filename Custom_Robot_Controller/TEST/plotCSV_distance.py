@@ -15,54 +15,50 @@ with open('distanceData.csv','r') as csvDistance:
 
 
 # for i in range(19):
-#     xd.append(xt[i] - xh[i])
-#     yd.append(yt[i] - yh[i])
-#     rd.append(rt[i] - rh[i])
+#     print(d[i])  
+
+# print('\n')
+
+# for i in range(19):
+#     dd.append(100 * abs(t[i] - d[i]) / (t[i] + 0.0001))
+
+#     print(dd[i])
 
 for i in range(19):
-    dd.append(100 * abs(t[i] - d[i]) / (t[i] + 0.0001))
+    dd.append(t[i] - d[i])
 
-    print(dd[i])
-
-print('\n')
+# print('\n')
 
 # Average error
-av_x = 0
-av_y = 0
-av_r = 0
+av_d = 0
 
 for i in range(12):
-    av_x += xd[i+2]
-    av_y += yd[i+2]
-    av_r += rd[i+2]
+    av_d += dd[i+2]
 
-    # print(av_x)
+av_d /= 12
 
-av_x /= 12
-av_y /= 12
-av_r /= 12
+# print('\n')
 
-print(av_x)
-print(av_y)
-print(av_r)
+print(av_d)
 
 
-# plt.subplot(3,1,1)
-# plt.plot(t,xd, label = 'x')
-# plt.plot(t,yd, label = 'y')
 
-# plt.xlabel('Distance to marble')
-# plt.ylabel('ground truth - measured value')
-# plt.title('Error percentage of center')
-# plt.legend()
+plt.subplot(3,1,1)
+plt.plot(t,t, 'r--', linewidth=0.5, label = 'Ideal line')
+plt.plot(t,d, label = 'calculated distance')
 
+plt.xlabel('True distance to marble')
+plt.ylabel('calculated distance')
+plt.title('Relation between true distance and calculated distance')
+plt.legend()
 
-# plt.subplot(3,1,3)
-# plt.plot(t,rd, label = 'r')
-# plt.xlabel('Distance to marble')
-# plt.ylabel('ground truth - measured value')
-# plt.title('Error percentage of radius')
-# plt.legend()
+plt.subplot(3,1,3)
+plt.plot(t,[0]*19, 'r--', linewidth=0.5, label = 'x-axis')
+plt.plot(t,dd, label = 'difference in distance [meters]')
+plt.xlabel('True distance to marble')
+plt.ylabel('ground truth - calculated distance')
+plt.title('Error of calculated distance in meters')
+plt.legend()
 
-# plt.show()
+plt.show()
 
