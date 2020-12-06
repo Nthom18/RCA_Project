@@ -16,7 +16,7 @@ void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacleLeft,
   obstacleLeft->setLockValueInRange(false);
   obstacleLeft->addTerm(new fl::Ramp("veryClose", 0.500, 0.000, 1.0));
   obstacleLeft->addTerm(new fl::Triangle("close", 0.250, 0.500, 0.750, 1.0));
-  obstacleLeft->addTerm(new fl::Triangle("visible", 0.500, 0.750, 1.000, 1.0));
+  obstacleLeft->addTerm(new fl::Triangle("far", 0.500, 0.750, 1.000, 1.0));
   engine->addInputVariable(obstacleLeft);
 
   obstacleCenter->setName("obstacleCenter");
@@ -26,7 +26,7 @@ void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacleLeft,
   obstacleCenter->setLockValueInRange(false);
   obstacleCenter->addTerm(new fl::Ramp("veryClose", 0.500, 0.000, 1.0));
   obstacleCenter->addTerm(new fl::Triangle("close", 0.250, 0.500, 0.750, 1.0));
-  obstacleCenter->addTerm(new fl::Triangle("visible", 0.500, 0.750, 1.000, 1.0));
+  obstacleCenter->addTerm(new fl::Triangle("far", 0.500, 0.750, 1.000, 1.0));
   engine->addInputVariable(obstacleCenter);
 
   obstacleRight->setName("obstacleRight");
@@ -36,7 +36,7 @@ void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacleLeft,
   obstacleRight->setLockValueInRange(false);
   obstacleRight->addTerm(new fl::Ramp("veryClose", 0.500, 0.000, 1.0));
   obstacleRight->addTerm(new fl::Triangle("close", 0.250, 0.500, 0.750, 1.0));
-  obstacleRight->addTerm(new fl::Triangle("visible", 0.500, 0.750, 1.000, 1.0));
+  obstacleRight->addTerm(new fl::Triangle("far", 0.500, 0.750, 1.000, 1.0));
   engine->addInputVariable(obstacleRight);
   
   //DifferenceLR
@@ -97,10 +97,10 @@ void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacleLeft,
   //Direction
   mamdani->addRule(fl::Rule::parse("if obstacleLeft is veryClose then mSteer is hardRight", engine));
   mamdani->addRule(fl::Rule::parse("if obstacleLeft is close then mSteer is right", engine));
-  mamdani->addRule(fl::Rule::parse("if obstacleLeft is visible then mSteer is softRight", engine));
+  mamdani->addRule(fl::Rule::parse("if obstacleLeft is far then mSteer is softRight", engine));
   mamdani->addRule(fl::Rule::parse("if obstacleRight is veryClose then mSteer is hardLeft", engine));
   mamdani->addRule(fl::Rule::parse("if obstacleRight is close then mSteer is left", engine));
-  mamdani->addRule(fl::Rule::parse("if obstacleRight is visible then mSteer is softLeft", engine));
+  mamdani->addRule(fl::Rule::parse("if obstacleRight is far then mSteer is softLeft", engine));
 
   //choose left/right 
   //mamdani->addRule(fl::Rule::parse("if obstacleCenter is veryClose and obstacleDifferenceLR is right then mSteer is hardLeft", engine));
@@ -109,6 +109,6 @@ void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacleLeft,
   //Speed
   mamdani->addRule(fl::Rule::parse("if obstacleCenter is veryClose then mSpeed is break", engine)); //obstacleRight is veryClose or obstacleLeft is veryClose or 
   mamdani->addRule(fl::Rule::parse("if obstacleRight is close or obstacleLeft is close or obstacleCenter is close then mSpeed is slow", engine));
-  mamdani->addRule(fl::Rule::parse("if obstacleRight is visible or obstacleLeft is visible or obstacleCenter is visible then mSpeed is maximum", engine));
+  mamdani->addRule(fl::Rule::parse("if obstacleRight is far or obstacleLeft is far or obstacleCenter is far then mSpeed is maximum", engine));
   engine->addRuleBlock(mamdani);
 }
