@@ -15,5 +15,6 @@ include_directories(../include)
 
 add_executable(robot_control ../scr/main.cpp ../scr/cv.hpp ../scr/cv.cpp 
                ../scr/ParticleFilter.hpp ../scr/Particle.hpp
-               ../scr/deadReckoning.hpp ../scr/deadReckoning.cpp)
+               ../scr/deadReckoning.hpp ../scr/deadReckoning.cpp
+               ../scr/testHough.hpp ../scr/testDistance.hpp)
 target_link_libraries(robot_control fuzzylite ${OpenCV_LIBS} ${GAZEBO_PROTO_LIBRARIES} ${GAZEBO_LIBRARIES})
