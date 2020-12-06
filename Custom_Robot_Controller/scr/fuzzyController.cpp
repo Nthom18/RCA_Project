@@ -16,7 +16,7 @@ void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacleLeft,
   obstacleLeft->setLockValueInRange(false);
   obstacleLeft->addTerm(new fl::Ramp("veryClose", 0.500, 0.000, 1.0));
   obstacleLeft->addTerm(new fl::Triangle("close", 0.250, 0.500, 0.750, 1.0));
-  obstacleLeft->addTerm(new fl::Triangle("far", 0.500, 0.750, 1.000, 1.0));
+  obstacleLeft->addTerm(new fl::Ramp("far", 0.500, 1.000, 1.0));
   engine->addInputVariable(obstacleLeft);
 
   obstacleCenter->setName("obstacleCenter");
@@ -26,7 +26,7 @@ void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacleLeft,
   obstacleCenter->setLockValueInRange(false);
   obstacleCenter->addTerm(new fl::Ramp("veryClose", 0.500, 0.000, 1.0));
   obstacleCenter->addTerm(new fl::Triangle("close", 0.250, 0.500, 0.750, 1.0));
-  obstacleCenter->addTerm(new fl::Triangle("far", 0.500, 0.750, 1.000, 1.0));
+  obstacleCenter->addTerm(new fl::Ramp("far", 0.500, 1.000, 1.0));
   engine->addInputVariable(obstacleCenter);
 
   obstacleRight->setName("obstacleRight");
@@ -36,7 +36,7 @@ void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacleLeft,
   obstacleRight->setLockValueInRange(false);
   obstacleRight->addTerm(new fl::Ramp("veryClose", 0.500, 0.000, 1.0));
   obstacleRight->addTerm(new fl::Triangle("close", 0.250, 0.500, 0.750, 1.0));
-  obstacleRight->addTerm(new fl::Triangle("far", 0.500, 0.750, 1.000, 1.0));
+  obstacleRight->addTerm(new fl::Ramp("far", 0.500, 1.000, 1.0));
   engine->addInputVariable(obstacleRight);
   
   //DifferenceLR
