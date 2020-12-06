@@ -11,7 +11,7 @@ int main()
     system("> server_signal.txt");
     system("echo 0 > server_signal.txt");
 
-    for(int i = 0; i < TEST_NR; i++)
+    for(int i = 3; i < TEST_NR; i++)
     {
         std::string world = "bigworldNoMarbles" + std::to_string(i) + ".world";
         std::string command = "../../Gazebo/gazebo_server.sh ../../Gazebo/bigTestWorlds/" + world + " &";
