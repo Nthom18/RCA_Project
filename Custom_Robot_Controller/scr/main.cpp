@@ -16,8 +16,11 @@
 #include "keyboardControl.cpp"
 #include "fuzzyController.cpp"
 #include "ParticleFilter.hpp"
+#include "deadReckoning.hpp"
 #include "cv.hpp"
 
+#include "testHough.hpp"
+#include "testDistance.hpp"
 
 /*   main   */
 int main(int _argc, char **_argv) {
@@ -84,6 +87,10 @@ int main(int _argc, char **_argv) {
 
   ParticleFilter localise(resize_image, topLeftCorner, buttomRightCorner);
 
+  deadReckoning movement;
+
+  CV cv;
+
   // Loop
   while (true) {
     gazebo::common::Time::MSleep(10);
@@ -136,9 +143,7 @@ int main(int _argc, char **_argv) {
     // std::cout << "fuzzyOutDir: " << fuzzyOutputDir << "  dir calculated: "<< ((float) fuzzyOutputDir * 0.8)-0.4 << " ->  dir: " << dir << std::endl;
     // //end test
 /**********************************/
-  if (key == key_esc)
-    break;
-
+  
     // Generate a pose
     ignition::math::Pose3d pose(double(speed), 0, 0, 0, 0, double(dir));
     
@@ -149,10 +154,29 @@ int main(int _argc, char **_argv) {
     gazebo::msgs::Set(&msg, pose);
     movementPublisher->Publish(msg);
 
+    /********** DEAD RECKONING **********/
+    // std::cout << "speed: " << speed << " dir: " << dir << std::endl;
+    // static int i = 0;
+    // dir = 1;
+    // i++;
+    // std::cout << "i: " << i << std::endl;
+    // movement.updateMovement(speed, dir);
+    
+    // mutex.lock();
+    //   cv::imshow("Movement tracker", movement.map);
+    // mutex.unlock();
 
     /********** HOUGH TRANSFORM **********/
+    
+    // cv::Mat cam_cal = cv.hough(cam);
+    
+    cv::Mat cam_cal = cam.clone();
 
-    cv::Mat cam_cal = hough(cam);
+    // TEST OF HOUGH - COMMENT IN TO PERFORM TEST
+    // testHough(cam);
+
+    // TEST OF DISTANCE - COMMENT IN TO PERFORM TEST
+    testDistance(cam);
 
     if( !(cam_cal.size().width == 0 && cam_cal.size().height == 0) )
     {
@@ -160,6 +184,31 @@ int main(int _argc, char **_argv) {
       cv::imshow("Hough Detection", cam_cal);
       mutex.unlock();
     }
+
+    
+
+    // static int ii = 0;
+    // static int k = 0;
+    // std::string imgPath = "../HoughTestImages/houghTest" + std::to_string(ii) + ".png";
+
+    // if (k > 1000)
+    // {
+    //     bool isSuccess = cv::imwrite(imgPath, cam_cal); //write the image to a file as JPEG 
+    //     if (isSuccess == false)
+    //     {
+    //         std::cout << "Failed to save the image" << std::endl;
+    //         return -1;
+    //     }
+    //     std::cout << "Snapshot nr.  " << ii << std::endl;
+    //     ii++;
+    //     k = 0;
+    // }
+    // k++;
+
+
+    /******* GET OUT OF LOOP DURING RUNTIME *******/
+    if (key == key_esc)
+    break;
   }
   // Make sure to shut everything down.
   gazebo::client::shutdown();
