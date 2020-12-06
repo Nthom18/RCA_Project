@@ -3,8 +3,15 @@
 
 #include <iostream>
 
-#define COLOR_COUNT 100
-#define BORDER_WIDTH 25
+#define COLOR_COUNT 200
+#define BORDER_WIDTH 5
+
+float intervalMappingF(float s, cv::Point from, cv::Point to)
+{
+    // Formula for linear mapping between intervals
+    float t = to.x + ((s - from.x)*(to.y - to.x))/(from.y - from.x);
+    return t;
+}
 
 void trackFuzzy(cv::Mat* map, float x, float y)
 {
@@ -32,11 +39,4 @@ void trackFuzzy(cv::Mat* map, float x, float y)
     cv::circle(*map, mark, 3, cv::Vec3b(color, color, 255), -1);
     
     i--;
-}
-
-float intervalMappingF(float s, cv::Point from, cv::Point to)
-{
-    // Formula for linear mapping between intervals
-    float t = to.x + ((s - from.x)*(to.y - to.x))/(from.y - from.x);
-    return t;
 }

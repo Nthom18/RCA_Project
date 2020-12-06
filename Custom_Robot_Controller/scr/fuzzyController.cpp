@@ -16,7 +16,7 @@ void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacleLeft,
   obstacleLeft->setLockValueInRange(false);
   obstacleLeft->addTerm(new fl::Ramp("veryClose", 0.500, 0.000, 1.0));
   obstacleLeft->addTerm(new fl::Triangle("close", 0.250, 0.500, 0.750, 1.0));
-  obstacleLeft->addTerm(new fl::Triangle("far", 0.500, 0.750, 1.000, 1.0));
+  obstacleLeft->addTerm(new fl::Ramp("far", 0.500, 1.000, 1.0));
   engine->addInputVariable(obstacleLeft);
 
   obstacleCenter->setName("obstacleCenter");
@@ -26,7 +26,7 @@ void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacleLeft,
   obstacleCenter->setLockValueInRange(false);
   obstacleCenter->addTerm(new fl::Ramp("veryClose", 0.500, 0.000, 1.0));
   obstacleCenter->addTerm(new fl::Triangle("close", 0.250, 0.500, 0.750, 1.0));
-  obstacleCenter->addTerm(new fl::Triangle("far", 0.500, 0.750, 1.000, 1.0));
+  obstacleCenter->addTerm(new fl::Ramp("far", 0.500, 1.000, 1.0));
   engine->addInputVariable(obstacleCenter);
 
   obstacleRight->setName("obstacleRight");
@@ -36,7 +36,7 @@ void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacleLeft,
   obstacleRight->setLockValueInRange(false);
   obstacleRight->addTerm(new fl::Ramp("veryClose", 0.500, 0.000, 1.0));
   obstacleRight->addTerm(new fl::Triangle("close", 0.250, 0.500, 0.750, 1.0));
-  obstacleRight->addTerm(new fl::Triangle("far", 0.500, 0.750, 1.000, 1.0));
+  obstacleRight->addTerm(new fl::Ramp("far", 0.500, 1.000, 1.0));
   engine->addInputVariable(obstacleRight);
   
   //DifferenceLR
@@ -61,8 +61,7 @@ void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacleLeft,
   mSpeed->setLockPreviousValue(false);
   mSpeed->addTerm(new fl::Ramp("break", 0.5, 0.25, 1.0)); //Ramp before
   mSpeed->addTerm(new fl::Triangle("slow", 0.250, 0.500, 0.750, 1.0));
-  mSpeed->addTerm(new fl::Ramp("maximum", 0.500, 1.000, 1.0));
-
+  mSpeed->addTerm(new fl::Triangle("maximum", 0.500, 1.000, 1.000, 1.0));
   engine->addOutputVariable(mSpeed);
 
   //Setup output variable - direction
@@ -80,7 +79,7 @@ void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacleLeft,
   mSteer->addTerm(new fl::Triangle("left", 0.125, 0.250, 0.375, 1.0));
   mSteer->addTerm(new fl::Triangle("softLeft", 0.250, 0.375, 0.600, 1.0));
   //right - maximum right = 1
-  mSteer->addTerm(new fl::Ramp("hardRight", 0.750, 1.000, 1.0));
+  mSteer->addTerm(new fl::Triangle("hardRight", 0.750, 1.000, 1.000, 1.0));
   mSteer->addTerm(new fl::Triangle("right", 0.625, 0.750, 0.875, 1.0));
   mSteer->addTerm(new fl::Triangle("softRight", 0.400, 0.650, 0.750, 1.0));
 
