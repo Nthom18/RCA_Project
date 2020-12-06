@@ -187,9 +187,7 @@ int main(int _argc, char **_argv) {
     // testDistance(cam);
 
     // TEST OF FUZZY - COMMENT IN TO PERFORM TEST
-    
-
-    trackFuzzy(&map, posex, posey);
+    testFuzzy(&map, posex, posey);
 
     mutex.lock();
       cv::imshow("track fuzzy", map);
