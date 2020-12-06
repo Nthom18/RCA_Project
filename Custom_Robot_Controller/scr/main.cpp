@@ -15,7 +15,6 @@
 #include "../include/GazeboFunctions.hpp"
 #include "keyboardControl.cpp"
 #include "fuzzyController.cpp"
-#include "ParticleFilter.hpp"
 #include "deadReckoning.hpp"
 #include "cv.hpp"
 
@@ -88,10 +87,6 @@ int main(int _argc, char **_argv) {
   cv::Point topLeftCorner = cv::Point(-34.89 , 24.6);
   cv::Point buttomRightCorner = cv::Point(41.36, -25.96);
   
-  ParticleFilter localise(resize_image, topLeftCorner, buttomRightCorner);
-
-  deadReckoning movement;
-
   CV cv;
 
   cv::Mat map = map0.clone();
@@ -103,8 +98,6 @@ int main(int _argc, char **_argv) {
     static float dir = 0.0;
     static float speed = 0.0;
 
-    /********** PARTICLE FILTER **********/
-    // localise.CreateParticles(center_distance);
 
     /********** CONTROL WITH KEYBOARD **********/
     keyboardControl(&dir, &speed);
@@ -160,23 +153,12 @@ int main(int _argc, char **_argv) {
     gazebo::msgs::Set(&msg, pose);
     movementPublisher->Publish(msg);
 
-    /********** DEAD RECKONING **********/
-    // std::cout << "speed: " << speed << " dir: " << dir << std::endl;
-    // static int i = 0;
-    // dir = 1;
-    // i++;
-    // std::cout << "i: " << i << std::endl;
-    // movement.updateMovement(speed, dir);
-    
-    // mutex.lock();
-    //   cv::imshow("Movement tracker", movement.map);
-    // mutex.unlock();
 
     /********** HOUGH TRANSFORM **********/
     
-    // cv::Mat cam_cal = cv.hough(cam);
+    cv::Mat cam_cal = cv.hough(cam);
     
-    cv::Mat cam_cal = cam.clone();
+    // cv::Mat cam_cal = cam.clone();
 
     /********** TESTS **********/
 
