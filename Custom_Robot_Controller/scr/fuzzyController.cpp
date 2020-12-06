@@ -59,7 +59,7 @@ void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacleLeft,
   mSpeed->setDefuzzifier(new fl::SmallestOfMaximum);
   mSpeed->setDefaultValue(1.000);
   mSpeed->setLockPreviousValue(false);
-  mSpeed->addTerm(new fl::Ramp("break", 0.5, 0.25, 1.0)); //Ramp before
+  mSpeed->addTerm(new fl::Ramp("brake", 0.5, 0.25, 1.0)); //Ramp before
   mSpeed->addTerm(new fl::Triangle("slow", 0.250, 0.500, 0.750, 1.0));
   mSpeed->addTerm(new fl::Triangle("maximum", 0.500, 1.000, 1.000, 1.0));
   engine->addOutputVariable(mSpeed);
@@ -75,14 +75,13 @@ void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacleLeft,
   mSteer->setDefaultValue(0.5);
   mSteer->setLockPreviousValue(false);
   //left - maximum left = 0
-  mSteer->addTerm(new fl::Ramp("hardLeft", 0.250, 0, 1.0));
+  mSteer->addTerm(new fl::Triangle("hardLeft", 0, 0, 0.250, 1.0));
   mSteer->addTerm(new fl::Triangle("left", 0.125, 0.250, 0.375, 1.0));
   mSteer->addTerm(new fl::Triangle("softLeft", 0.250, 0.375, 0.600, 1.0));
   //right - maximum right = 1
   mSteer->addTerm(new fl::Triangle("hardRight", 0.750, 1.000, 1.000, 1.0));
   mSteer->addTerm(new fl::Triangle("right", 0.625, 0.750, 0.875, 1.0));
   mSteer->addTerm(new fl::Triangle("softRight", 0.400, 0.650, 0.750, 1.0));
-
   engine->addOutputVariable(mSteer);
 
   // Setup ruleblock
@@ -106,7 +105,7 @@ void fuzzyController(fl::Engine* engine, fl::InputVariable* obstacleLeft,
   //mamdani->addRule(fl::Rule::parse("if obstacleCenter is veryClose and obstacleDifferenceLR is left then mSteer is hardRight", engine));
 
   //Speed
-  mamdani->addRule(fl::Rule::parse("if obstacleCenter is veryClose then mSpeed is break", engine)); //obstacleRight is veryClose or obstacleLeft is veryClose or 
+  mamdani->addRule(fl::Rule::parse("if obstacleCenter is veryClose then mSpeed is brake", engine)); //obstacleRight is veryClose or obstacleLeft is veryClose or 
   mamdani->addRule(fl::Rule::parse("if obstacleRight is close or obstacleLeft is close or obstacleCenter is close then mSpeed is slow", engine));
   mamdani->addRule(fl::Rule::parse("if obstacleRight is far or obstacleLeft is far or obstacleCenter is far then mSpeed is maximum", engine));
   engine->addRuleBlock(mamdani);
