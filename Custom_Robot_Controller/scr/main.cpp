@@ -176,7 +176,7 @@ int main(int _argc, char **_argv) {
     // testHough(cam);
 
     // TEST OF DISTANCE - COMMENT IN TO PERFORM TEST
-    testDistance(cam);
+    // testDistance(cam);
 
     if( !(cam_cal.size().width == 0 && cam_cal.size().height == 0) )
     {
