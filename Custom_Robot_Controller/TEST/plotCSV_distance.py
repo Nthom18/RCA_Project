@@ -19,11 +19,13 @@ with open('distanceData.csv','r') as csvDistance:
 
 # print('\n')
 
+# # Difference in percentage
 # for i in range(19):
 #     dd.append(100 * abs(t[i] - d[i]) / (t[i] + 0.0001))
 
 #     print(dd[i])
 
+# Difference in meters
 for i in range(19):
     dd.append(t[i] - d[i])
 
