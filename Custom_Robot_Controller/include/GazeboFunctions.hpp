@@ -54,6 +54,9 @@ void poseCallback(ConstPosesStampedPtr &_msg) {
       
       // std::cout << _msg->pose(i).orientation().z() << std::endl;
       // std::cout << _msg->pose(i).position().x() << std::endl;
+
+      posex = _msg->pose(i).position().x();
+      posey = _msg->pose(i).position().y();
     }
   }
   // mutex.lock();

@@ -21,6 +21,7 @@
 
 #include "testHough.hpp"
 #include "testDistance.hpp"
+#include "testFuzzy.hpp"
 
 /*   main   */
 int main(int _argc, char **_argv) {
@@ -93,6 +94,8 @@ int main(int _argc, char **_argv) {
 
   CV cv;
 
+  cv::Mat map = map0.clone();
+
   // Loop
   while (true) {
     gazebo::common::Time::MSleep(10);
@@ -131,15 +134,15 @@ int main(int _argc, char **_argv) {
     fl::scalar fuzzyOutputDir = mSteer->getValue();
     fl::scalar fuzzyOutputSpeed = mSpeed->getValue();
 /**********************************/
-    if( ( (speed - ( (float) fuzzyOutputSpeed * 1.25) ) > 0.05) || ( ( ( (float) fuzzyOutputSpeed * 1.25)  - speed) > 0.05)) //If the difference is greater than 0.05
-    {
-      speed = (float) (fuzzyOutputSpeed * 1.25);
-    }  
+    // if( ( (speed - ( (float) fuzzyOutputSpeed * 1.25) ) > 0.05) || ( ( ( (float) fuzzyOutputSpeed * 1.25)  - speed) > 0.05)) //If the difference is greater than 0.05
+    // {
+    //   speed = (float) (fuzzyOutputSpeed * 1.25);
+    // }  
 
-    if((abs(dir - ((float) fuzzyOutputDir * 0.8)-0.4) > 0.05) || (((abs((float) fuzzyOutputDir * 0.8)-0.4) - dir)  > 0.05))  //((abs(((float) fuzzyOutputDir * 0.8)-0.4) - dir)  > 0.05)
-    {
-      dir = ((float) fuzzyOutputDir * 0.8)-0.4;
-    }
+    // if((abs(dir - ((float) fuzzyOutputDir * 0.8)-0.4) > 0.05) || (((abs((float) fuzzyOutputDir * 0.8)-0.4) - dir)  > 0.05))  //((abs(((float) fuzzyOutputDir * 0.8)-0.4) - dir)  > 0.05)
+    // {
+    //   dir = ((float) fuzzyOutputDir * 0.8)-0.4;
+    // }
     
     // //test
     // std::cout << "Dir - stuff: " << (dir - (((float) fuzzyOutputDir * 0.8)-0.4) > 0.01) << " or stuff- dir: " << (((((float) fuzzyOutputDir * 0.8)-0.4) - dir)) << std::endl;
@@ -175,11 +178,25 @@ int main(int _argc, char **_argv) {
     
     cv::Mat cam_cal = cam.clone();
 
+    /********** TESTS **********/
+
     // TEST OF HOUGH - COMMENT IN TO PERFORM TEST
     // testHough(cam);
 
     // TEST OF DISTANCE - COMMENT IN TO PERFORM TEST
     // testDistance(cam);
+
+    // TEST OF FUZZY - COMMENT IN TO PERFORM TEST
+    
+
+    trackFuzzy(&map, posex, posey);
+
+    mutex.lock();
+      cv::imshow("track fuzzy", map);
+    mutex.unlock();
+
+
+    /********** SHOW CAMERA **********/
 
     if( !(cam_cal.size().width == 0 && cam_cal.size().height == 0) )
     {
